@@ -9,7 +9,7 @@ function Signup() {
 const [signup, setSignup] = useState({
     fullNames: "",
     email: "",
-    phoneNumber:"",
+    phoneNumber:"+254",
     gender:"",
     profileLink:"",
     password:"",
@@ -23,26 +23,43 @@ function handleChange(e) {
     setSignup({ ...signup, [key]: e.target.value });
   }
 
+
+  //SUBMIT DATA TO BACKEND
 const handleSubmit = (event) => {
     event.preventDefault();
 
-    //LETS UPLOAD PROFILE IMAGE USING AXIOS
-    formData.append("file", uploadFile);
-    formData.append("upload_preset", "your upload preset name");
+    fetch("https://portfolio-maker254.herokuapp.com/clients", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+        name: client.name,
+        subject: client.subject,
+        email: client.email,
+        message: client.message,
+        user_id: 1
+        }),
+    })
 
-    Axios.post(
-     "https://api.cloudinary.com/v1_1/mern-test/image/upload",
-     formData
-   )
-    .then((response) => {
-      console.log(response);
-      setCloudinaryImage(response.data.secure_url);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  };
+//     //LETS UPLOAD PROFILE IMAGE USING AXIOS
+//      const formData = new FormData ();
+//     formData.append("file", uploadFile);
+//     formData.append("upload_preset", "your upload preset name");
 
+//     Axios.post(
+//      "https://api.cloudinary.com/v1_1/mern-test/image/upload",
+//      formData
+//    )
+//     .then((response) => {
+//       console.log(response);
+//       setCloudinaryImage(response.data.secure_url);
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     });
+//   };
+}
 
     const [sidebar, setsidebar] = useState();
     return (
@@ -55,7 +72,7 @@ const handleSubmit = (event) => {
                     <form onSubmit={handleSubmit}>
                     <div>
                         <lable className="text-sm font-medium leading-none text-gray-800">Full Names</lable>
-                        <input id="fullNames" value={signup.fullNames} onChange={setSignup}   placeholder="Enter email adress" role="input" type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                        <input id="fullNames" value={signup.fullNames} onChange={setSignup}   placeholder="Enter full names" role="input" type="text" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
                     </div>
                     <div>
                         <lable className="text-sm font-medium leading-none text-gray-800">Email</lable>
@@ -63,7 +80,7 @@ const handleSubmit = (event) => {
                     </div> 
                     <div>
                         <lable className="text-sm font-medium leading-none text-gray-800">Phone numer</lable>
-                        <input id="phoneNumber" value={signup.phoneNumber} onChange={setSignup} placeholder="Phone number" role="input" value="+254" type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                        <input id="phoneNumber" value={signup.phoneNumber} onChange={setSignup} placeholder="Phone number" role="input"  type="text" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
                     </div>
                     <div>
                         <lable className="text-sm font-medium leading-none text-gray-800">Select Gender</lable>
@@ -75,7 +92,7 @@ const handleSubmit = (event) => {
                     </div>
                     <div>
                         <lable className="text-sm font-medium leading-none text-gray-800">Select Profile image</lable>
-                        <input id="profileLink" onChange ={(event) => {setUploadFile(event.target.files[0]);}}  placeholder="enter full names" role="input" type="file" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                        <input id="profileLink" onChange ={(event) => {setUploadFile(event.target.files[0]);}}   role="input" type="file" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
                     </div>
                     <div className="mt-6  w-full">
                         <lable className="text-sm font-medium leading-none text-gray-800">Password</lable>
