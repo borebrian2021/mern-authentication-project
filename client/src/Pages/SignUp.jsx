@@ -4,13 +4,15 @@ import toast, { Toaster } from 'react-hot-toast';
 function Signup() {
 
 //LETS SET CONTROLED FORMS
+ const [uploadFile, setUploadFile] = useState("");
 const [signup, setSignup] = useState({
     fullNames: "",
     email: "",
     phoneNumber:"",
     gender:"",
     profileLink:"",
-    password:""
+    password:"",
+    uploadFile
 });
 
 function handleChange(e) {
@@ -53,7 +55,7 @@ const handleSubmit = (event) => {
                     </div>
                     <div>
                         <lable className="text-sm font-medium leading-none text-gray-800">Select Profile image</lable>
-                        <input id="profileLink" value={signup.profileLink} onChange={setSignup} placeholder="enter full names" role="input" type="file" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                        <input id="profileLink" onChange ={(event) => {setUploadFile(event.target.files[0]);}}  placeholder="enter full names" role="input" type="file" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
                     </div>
                     <div className="mt-6  w-full">
                         <lable className="text-sm font-medium leading-none text-gray-800">Password</lable>
