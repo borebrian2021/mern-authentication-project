@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import toast, { Toaster } from 'react-hot-toast';
 
 function Signup() {
 
@@ -11,6 +12,11 @@ const [signup, setSignup] = useState({
     ProfileLink:"",
     Password:""
 });
+
+const handleClient = (event) => {
+    event.preventDefault();
+}
+
 
     const [sidebar, setsidebar] = useState();
     return (
