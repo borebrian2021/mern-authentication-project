@@ -22,7 +22,7 @@ function Dashboard() {
         <th></th> 
         <th>Name</th> 
         <th>Profile pic</th> 
-        <th>Job</th> 
+        <th>Gender</th> 
         <th>company</th> 
         <th>location</th> 
         <th>Last Login</th> 
@@ -33,15 +33,18 @@ function Dashboard() {
       <tr>
         <th>1</th> 
         
-        <td>Cy Ganderton</td> 
+        <td><input aria-label="enter email adress" role="input" value="Cy Ganderton" type="email" className=" border border-blue-500 rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+        </td> 
+       
         <td>
         <div className="avatar">
               <div className="mask mask-squircle w-12 h-12">
                 <img src="https://res.cloudinary.com/dqab6gg7d/image/upload/v1683296721/mern-authentication/pexels-tain%C3%A1-bernard-3586091_o1ub2a.jpg" alt="Avatar Tailwind CSS Component" />
-              </div>
         </div>
-            </td> 
-        <td>Quality Control Specialist</td> 
+        </div>
+        </td> 
+        <td> <td><input aria-label="enter email adress" role="input" value="Cy Ganderton" type="email" className=" border border-blue-500 rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+        </td> </td> 
         <td>Littel, Schaden and Vandervort</td> 
         <td>Canada</td> 
         <td>12/16/2020</td> 

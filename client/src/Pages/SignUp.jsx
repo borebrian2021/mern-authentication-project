@@ -6,7 +6,7 @@ function Signup() {
         <div className="h-full bg-gradient-to-tl from-green-400 to-indigo-900 w-full py-16 px-4">
             <div className="flex flex-col items-center justify-center">
                 <div className="bg-white shadow rounded lg:w-1/3  md:w-1/2 w-full p-10 mt-4">
-                <p tabIndex={0} role="heading" aria-label="Login to your account" className="text-2xl font-extrabold leading-6 mb-3 text-gray-800">
+                    <p tabIndex={0} role="heading" aria-label="Login to your account" className="text-2xl font-extrabold leading-6 mb-3 text-gray-800">
                         Signup for your account
                     </p>
                     <div>
@@ -16,6 +16,14 @@ function Signup() {
                     <div>
                         <lable className="text-sm font-medium leading-none text-gray-800">Email</lable>
                         <input placeholder="enter full names" role="input" type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                    </div>
+                    <div>
+                        <lable className="text-sm font-medium leading-none text-gray-800">Select Gender</lable>
+                        <select className="select w-full max-w-xs">
+                            <option disabled selected>Pick your Gender </option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
                     </div>
                     <div>
                         <lable className="text-sm font-medium leading-none text-gray-800">Select Profile image</lable>
@@ -34,8 +42,8 @@ function Signup() {
                                 </svg>
                             </div>
                         </div>
-                    </div> 
-                    
+                    </div>
+
                     <div className="mt-6  w-full">
                         <lable className="text-sm font-medium leading-none text-gray-800">Repeat Password</lable>
                         <div className="relative flex items-center justify-center">
@@ -55,7 +63,7 @@ function Signup() {
                             Create my account
                         </button>
                     </div>
-                  
+
                     <p className="text-sm mt-4 font-medium leading-none text-gray-500">
                         Dont have account?{" "}
                         <span tabIndex={0} role="link" aria-label="Sign up here" className="text-sm font-medium leading-none underline text-gray-800 cursor-pointer">
@@ -77,9 +85,9 @@ function Signup() {
                         </svg>
                         <p className="text-base font-medium ml-4 text-gray-700">Continue with Google</p>
                     </button>
-                 
-                  
-                  
+
+
+
                 </div>
             </div>
         </div>
