@@ -10,5 +10,6 @@ module.exports = {
       'cormorant': ['Cormorant Garamond','serif'],
     },
   },
-  plugins: [],
+
+  plugins: [require("daisyui")],
 }
