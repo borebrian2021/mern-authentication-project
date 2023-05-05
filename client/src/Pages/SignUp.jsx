@@ -5,18 +5,22 @@ function Signup() {
 
 //LETS SET CONTROLED FORMS
 const [signup, setSignup] = useState({
-    FullNames: "",
-    Email: "",
-    PhoneNumber:"",
-    Gender:"",
-    ProfileLink:"",
-    Password:""
+    fullNames: "",
+    email: "",
+    phoneNumber:"",
+    gender:"",
+    profileLink:"",
+    password:""
 });
 
-const handleClient = (event) => {
+function handleChange(e) {
+    const key = e.target.id;
+    setSignup({ ...signup, [key]: e.target.value });
+  }
+
+const handleSubmit = (event) => {
     event.preventDefault();
 }
-
 
     const [sidebar, setsidebar] = useState();
     return (
@@ -26,21 +30,22 @@ const handleClient = (event) => {
                     <p tabIndex={0} role="heading" aria-label="Login to your account" className="text-2xl font-extrabold leading-6 mb-3 text-gray-800">
                         Signup for your account
                     </p>
+                    <form onSubmit={handleSubmit}>
                     <div>
                         <lable className="text-sm font-medium leading-none text-gray-800">Full Names</lable>
-                        <input placeholder="Enter email adress" role="input" type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                        <input id="fullNames" value={signup.fullNames} onChange={setSignup}   placeholder="Enter email adress" role="input" type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
                     </div>
                     <div>
                         <lable className="text-sm font-medium leading-none text-gray-800">Email</lable>
-                        <input placeholder="enter full names" role="input" type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                        <input id="email" value={signup.email} onChange={setSignup} placeholder="Enter email" role="input" type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
                     </div> 
                     <div>
                         <lable className="text-sm font-medium leading-none text-gray-800">Phone numer</lable>
-                        <input placeholder="Phone number" role="input" value="+254" type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                        <input id="phoneNumber" value={signup.phoneNumber} onChange={setSignup} placeholder="Phone number" role="input" value="+254" type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
                     </div>
                     <div>
                         <lable className="text-sm font-medium leading-none text-gray-800">Select Gender</lable>
-                        <select className="select select-success  w-full max-w-xs">
+                        <select id="gender"  value={signup.gender} onChange={setSignup}  className="select select-success  w-full max-w-xs">
                             <option disabled selected>Pick your Gender </option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
@@ -48,12 +53,12 @@ const handleClient = (event) => {
                     </div>
                     <div>
                         <lable className="text-sm font-medium leading-none text-gray-800">Select Profile image</lable>
-                        <input placeholder="enter full names" role="input" type="file" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                        <input id="profileLink" value={signup.profileLink} onChange={setSignup} placeholder="enter full names" role="input" type="file" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
                     </div>
                     <div className="mt-6  w-full">
                         <lable className="text-sm font-medium leading-none text-gray-800">Password</lable>
                         <div className="relative flex items-center justify-center">
-                            <input aria-label="enter Password" placeholder="Enter password" role="input" type="password" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                            <input id="password" value={signup.password} onChange={setSignup} aria-label="enter Password" placeholder="Enter password" role="input" type="password" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
                             <div className="absolute right-0 mt-2 mr-3 cursor-pointer">
                                 <svg width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -80,10 +85,11 @@ const handleClient = (event) => {
                         </div>
                     </div>
                     <div className="mt-8">
-                        <button role="button" aria-label="create my account" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">
+                        <button  role="button" aria-label="create my account" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">
                             Create my account
                         </button>
                     </div>
+                    </form>
 
                     <p className="text-sm mt-4 font-medium leading-none text-gray-500">
                         Dont have account?{" "}
