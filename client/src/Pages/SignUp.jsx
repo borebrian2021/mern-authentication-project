@@ -13,12 +13,14 @@ const [signup, setSignup] = useState({
     gender:"",
     profileLink:"",
     password:"",
-    uploadFile
+    confirmPassword: "",
+    
 });
 
 
 //HANDLING CHANGES TO THE FORM INPUTS
 function handleChange(e) {
+
     const key = e.target.id;
     setSignup({ ...signup, [key]: e.target.value });
   }
@@ -27,20 +29,26 @@ function handleChange(e) {
   //SUBMIT DATA TO BACKEND
 const handleSubmit = (event) => {
     event.preventDefault();
-
-    fetch("https://portfolio-maker254.herokuapp.com/clients", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-        name: client.name,
-        subject: client.subject,
-        email: client.email,
-        message: client.message,
-        user_id: 1
-        }),
-    })
+    if(password==confirmPassword){
+        fetch("http://localhost/api/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                fullNames: signup.fullNames,
+                email: signup.email,
+                phoneNumber: signup.phoneNumber,
+                gender: Signup.gender,
+                profileLink: Signup.profileLink,
+                confirmPassword: Signup.confirmPassword,
+            user_id: 1
+            }),
+        })
+    }
+   else{
+    Toaster.error('Password field do not match!');
+   }
 
 //     //LETS UPLOAD PROFILE IMAGE USING AXIOS
 //      const formData = new FormData ();
@@ -112,7 +120,7 @@ const handleSubmit = (event) => {
                     <div className="mt-6  w-full">
                         <lable className="text-sm font-medium leading-none text-gray-800">Repeat Password</lable>
                         <div className="relative flex items-center justify-center">
-                            <input aria-label="Re-enter Password" placeholder="Re-enter password" role="input" type="password" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                            <input id="confirmPassword" value={signup.confirmPassword} onChange={setSignup} aria-label="Re-enter Password" placeholder="Re-enter password" role="input" type="password" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
                             <div className="absolute right-0 mt-2 mr-3 cursor-pointer">
                                 <svg width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path
