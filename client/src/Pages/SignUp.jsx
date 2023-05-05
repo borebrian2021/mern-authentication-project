@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
+import Axios from "axios";
 
 function Signup() {
 
@@ -15,6 +16,8 @@ const [signup, setSignup] = useState({
     uploadFile
 });
 
+
+//HANDLING CHANGES TO THE FORM INPUTS
 function handleChange(e) {
     const key = e.target.id;
     setSignup({ ...signup, [key]: e.target.value });
@@ -22,7 +25,24 @@ function handleChange(e) {
 
 const handleSubmit = (event) => {
     event.preventDefault();
-}
+
+    //LETS UPLOAD PROFILE IMAGE USING AXIOS
+    formData.append("file", uploadFile);
+    formData.append("upload_preset", "your upload preset name");
+
+    Axios.post(
+     "https://api.cloudinary.com/v1_1/mern-test/image/upload",
+     formData
+   )
+    .then((response) => {
+      console.log(response);
+      setCloudinaryImage(response.data.secure_url);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  };
+
 
     const [sidebar, setsidebar] = useState();
     return (
