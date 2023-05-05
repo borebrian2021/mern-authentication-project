@@ -5,6 +5,7 @@ import NavBar from './Components/NavBar'
 import Login from './Pages/Login'
 import Signup from './Pages/SignUp'
 import ResetPass from './Pages/ResetPass'
+import Dashboard from './Pages/Dashboard'
 import './App.css'
 
 function App() {
@@ -15,7 +16,8 @@ function App() {
 <NavBar/>
 {/* <Login/> */}
 {/* <Signup/> */}
-<ResetPass/>
+{/* <ResetPass/> */}
+<Dashboard/>
 </> 
 
 )
