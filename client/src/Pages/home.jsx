@@ -5,6 +5,7 @@ class Home extends Component {
         return (
             <>
                 <div className="hero  ">
+                    
                     <div className="hero-content flex-col lg:flex-row">
                         <img src="https://res.cloudinary.com/dqab6gg7d/image/upload/v1683296721/mern-authentication/pexels-tain%C3%A1-bernard-3586091_o1ub2a.jpg" className="max-w-sm rounded-lg shadow-2xl h-[200px]" />
                         <div>
