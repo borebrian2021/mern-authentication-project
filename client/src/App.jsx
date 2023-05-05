@@ -14,9 +14,13 @@ function App() {
   const [count, setCount] = useState(0)
   return (
     <div className="bg-base-200 h-[100%]">
-
+<NavBar/>
     <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/Signup" element={<Signup />} />
+        <Route path="/ResetPass" element={<ResetPass />} />
+        <Route path="/Dashboard" element={<Dashboard />} />
+        <Route path="/Home" element={<Home />} />
 {/* <Login/> */}
 {/* <Signup/> */}
 {/* <ResetPass/> */}
