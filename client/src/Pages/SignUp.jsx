@@ -19,7 +19,7 @@ function Signup() {
                     </div>
                     <div>
                         <lable className="text-sm font-medium leading-none text-gray-800">Select Gender</lable>
-                        <select className="select w-full max-w-xs">
+                        <select className="select select-success  w-full max-w-xs">
                             <option disabled selected>Pick your Gender </option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
