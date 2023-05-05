@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Route, Routes } from "react-router-dom";
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import NavBar from './Components/NavBar'
@@ -13,13 +14,14 @@ function App() {
   const [count, setCount] = useState(0)
   return (
     <div className="bg-base-200 h-[100%]">
-    
-<NavBar/>
+
+    <Routes>
+        <Route path="/" element={<Login />} />
 {/* <Login/> */}
 {/* <Signup/> */}
 {/* <ResetPass/> */}
 {/* <Dashboard/> */}
-<Home/>
+</Routes>
 
 </div> 
 
