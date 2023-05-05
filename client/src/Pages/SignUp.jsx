@@ -1,6 +1,17 @@
 import React, { useState } from "react";
 
 function Signup() {
+
+//LETS SET CONTROLED FORMS
+const [signup, setSignup] = useState({
+    FullNames: "",
+    Email: "",
+    PhoneNumber:"",
+    Gender:"",
+    ProfileLink:"",
+    Password:""
+});
+
     const [sidebar, setsidebar] = useState();
     return (
         <div className="h-full bg-gradient-to-tl from-green-400 to-indigo-900 w-full py-16 px-4">
