@@ -6,6 +6,7 @@ import Login from './Pages/Login'
 import Signup from './Pages/SignUp'
 import ResetPass from './Pages/ResetPass'
 import Dashboard from './Pages/Dashboard'
+import Home from './Pages/home'
 import './App.css'
 
 function App() {
@@ -17,7 +18,9 @@ function App() {
 {/* <Login/> */}
 {/* <Signup/> */}
 {/* <ResetPass/> */}
-<Dashboard/>
+{/* <Dashboard/> */}
+<Home/>
+
 </> 
 
 )
