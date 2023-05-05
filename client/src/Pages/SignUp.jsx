@@ -16,6 +16,10 @@ function Signup() {
                     <div>
                         <lable className="text-sm font-medium leading-none text-gray-800">Email</lable>
                         <input placeholder="enter full names" role="input" type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                    </div> 
+                    <div>
+                        <lable className="text-sm font-medium leading-none text-gray-800">Phone numer</lable>
+                        <input placeholder="Phone number" role="input" value="+254" type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
                     </div>
                     <div>
                         <lable className="text-sm font-medium leading-none text-gray-800">Select Gender</lable>

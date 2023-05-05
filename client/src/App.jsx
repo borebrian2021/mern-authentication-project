@@ -15,9 +15,9 @@ function App() {
     
 <NavBar/>
 {/* <Login/> */}
-<Signup/>
+{/* <Signup/> */}
 {/* <ResetPass/> */}
-{/* <Dashboard/> */}
+<Dashboard/>
 </> 
 
 )
