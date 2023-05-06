@@ -20,6 +20,7 @@ mangoose.connect('mongodb://localhost:27017/mern-auth')
 //LOGIN USER ENDPOINT
 app.post('/api/login', async (req, res) => {
     try {
+        const expiresIn = 180;
         const user = await User.findOne({
             email: req.body.email,
             password: req.body.password,
@@ -31,7 +32,7 @@ app.post('/api/login', async (req, res) => {
                 email: user.email,
                 role: user.role
             },
-                'mern-assesement2023'
+                'mern-assesement2023',{expiresIn}
             )
             return res.json({ status: "ok", user: token, login: true })
         }

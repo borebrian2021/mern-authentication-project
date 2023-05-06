@@ -2,19 +2,25 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { NavLink } from "react-router-dom";
+import { toast } from 'react-hot-toast';
 
-const navigation = [
-  { name: 'Home', href: 'Home', current: true },
-  { name: 'Login', href: '/', current: false },
-  { name: 'Signup', href: 'Signup', current: false },
-  { name: 'Manage Users', href: 'Dashboard', current: false },
-]
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Example() {
+export default function NavBar({adminCheck, updateStatus}) {
+  //NAVIGATION MENU 
+  const navigation = [
+    { name: 'Home', href: 'Home', current: true,status: "show" },
+    { name: 'Login', href: '/', current: false,status: adminCheck?"hidden":"show" },
+    { name: 'Signup', href: 'Signup', current: false,status: "show" },
+    { name: 'Manage Users', href: 'Dashboard', current: false ,status: "show"},
+    { name: 'Log Out', href: "" , current: false,status: adminCheck?"show":"hidden"}
+  ]
+
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -48,7 +54,10 @@ export default function Example() {
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                     <NavLink
+                      item.status==="hidden" ?
+                     <></>
+                     :
+                     <NavLink 
                      to={item.href}
                         key={item.name}
                         href={item.href}
@@ -59,7 +68,8 @@ export default function Example() {
                         aria-current={item.current ? 'page' : undefined}
                       >
                         {item.name}
-                      </NavLink>
+                        </NavLink>
+                        
                     ))}
                   </div>
                 </div>

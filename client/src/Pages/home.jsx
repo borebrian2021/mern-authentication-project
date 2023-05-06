@@ -18,6 +18,7 @@ const [role,setRole]=useState("");
 
         if (token) {
             const user = jwt(token)
+            console.log(user)
             if (!user) {
                
                 localStorage.removeItem('token')
