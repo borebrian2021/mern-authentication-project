@@ -65,13 +65,13 @@ app.post('/api/send-reset-code', async (req, res) => {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: 'bkimutai2021@gmail.com',
-                pass: 'yourpassword'
+                user: 'briankoskei2023@gmail.com',
+                pass: 'gqndbmumklhwzyza'
             }
         });
 
         const mailOptions = {
-            from: 'bkimutai2021@gmail.com',
+            from: 'briankoskei2023@gmail.com',
             to: user.email,
             subject: 'Password Reset Code',
             text: `Your password reset code is: ${resetCode}`
