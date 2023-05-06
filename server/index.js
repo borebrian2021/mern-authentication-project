@@ -32,7 +32,7 @@ app.post('/api/login', async (req, res) => {
                 email: user.email,
                 role: user.role
             },
-                'mern-assesement2023',{expiresIn}
+                'mern-assesement2023', { expiresIn }
             )
             return res.json({ status: "ok", user: token, login: true })
         }
@@ -59,7 +59,7 @@ app.post('/api/send-reset-code', async (req, res) => {
     }
     else {
 
-        const resetCode =Math.floor(100000 + Math.random() * 900000);
+        const resetCode = Math.floor(100000 + Math.random() * 900000);
         user.code = resetCode;
         user.reset = true;
         await user.save();
@@ -82,15 +82,15 @@ app.post('/api/send-reset-code', async (req, res) => {
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
                 console.log(error);
-            } else  {
+            } else {
                 console.log('Email sent: ' + info.response);
-        return res.json({ status: 'ok', message: "Email sent successfully!" })
+                return res.json({ status: 'ok', message: "Email sent successfully!" })
 
             }
         });
     }
 
-   
+
 
 
 })
@@ -120,9 +120,9 @@ app.post('/api/change-password', async (req, res) => {
     if (user) {
         user.password = req.body.password;
         user.reset = false;
-        user.code='000000'
+        user.code = '000000'
         await user.save();
-        return res.json({ status:'ok', message: "Password reset success!" })
+        return res.json({ status: 'ok', message: "Password reset success!" })
 
     } else {
         return res.json({ status: 'error', message: "Password reset  fail!" })
@@ -134,34 +134,54 @@ app.post('/api/change-password', async (req, res) => {
 //GET ALL USERS PASSWORD
 app.get('/api/get-users', async (req, res) => {
 
-   
-   try{
-    const users = await User.find();
-    return res.json({ status:'ok',data:users, message: "Users retrieved successfully!" })
-   }
-    catch(err){
 
-    return res.json({ status: 'error', message: "Failed to get users!" })
+    try {
+        const users = await User.find();
+        return res.json({ status: 'ok', data: users, message: "Users retrieved successfully!" })
+    }
+    catch (err) {
+
+        return res.json({ status: 'error', message: "Failed to get users!" })
 
     }
 
 })
 
+
+
+//UPDATE USER PASSWORD
+app.post('/api/update-user', async (req, res) => {
+    const user = await User.findOne({ email: req.body.email, code: req.body.code })
+    if (user) {
+        user.fullNames = req.body.fullNames;
+        user.email = req.body.email;
+        user.role = req.body.role;
+        user.phoneNumber = req.body.phoneNumber;
+        user.gender = req.body.gender;
+        user.profileLink = req.body.profileLink;
+        await user.save();
+        return res.json({ status: 'ok',data:user, message: "User Updated successfully!" })
+
+    } else {
+        return res.json({ status: 'error', message: "User uodate fail!" })
+
+    }
+})
 //UPDATE USER PASSWORD
 app.get('/api/get-users', async (req, res) => {
 
-   
-    try{
-     const users = await User.find();
-     return res.json({ status:'ok',data:users, message: "Users retrieved successfully!" })
+
+    try {
+        const users = await User.find();
+        return res.json({ status: 'ok', data: users, message: "Users retrieved successfully!" })
     }
-     catch(err){
- 
-     return res.json({ status: 'error', message: "Failed to get users!" })
- 
-     }
- 
- })
+    catch (err) {
+
+        return res.json({ status: 'error', message: "Failed to get users!" })
+
+    }
+
+})
 
 //REGISTER USER ENDPOINT
 app.post('/api/register', async (req, res) => {

@@ -4,6 +4,8 @@ import toast, { Toaster } from 'react-hot-toast';
 function Dashboard() {
     const [sidebar, setsidebar] = useState();
     const [users, setUsers] = useState([]);
+    const [id, setId] = useState([]);
+    const [updateUser,setUpdateUser] = useState([]);
 
 
     //CONTROLLED FORMS
@@ -53,7 +55,7 @@ function Dashboard() {
         if (values.password === values.confirmPassword) {
             // alert('working')
 
-            fetch("http://localhost:1337/api/update-user", {
+            fetch("http://localhost:1337/api/update-user/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -71,17 +73,18 @@ function Dashboard() {
                 .then((response) => {
                     setValues_({
                         ...values,
-                        fullNames: "",
-                        role:"",
-                        email: "",
-                        phoneNumber: "+254",
-                        gender: "",
-                        profileLink: "",
+                        fullNames: response.data.fullNames,
+                        email: response.data.email,
+                        role:response.data.role,
+                        phoneNumber: response.data.phoneNumber,
+                        gender: response.data.gender,
+                        profileLink: response.data.profileLink,
 
                     });
 
                     // console.log(response);
-                    toast.success('Submitted successfully!')
+                    toast.success('Updated successfully!')
+                    setUpdateUser(response.data)
                     setTimeout(gotLogin(), 3000);
 
                 })
@@ -131,7 +134,7 @@ function Dashboard() {
 
                 toast.error('Something went wrong')
             });
-    }, [])
+    }, [updateUser])
 
 
 
@@ -206,7 +209,10 @@ function Dashboard() {
                                     <td>
                                         <div className="btn-group">
                                             
-                                            <label htmlFor="my-modal-5" className="btn  btn-xs" onClick={()=>setValues(currentValue.fullNames,currentValue.role,currentValue.email,currentValue.phoneNumber,currentValue.gender,currentValue.profileUrl)}>Edit</label>
+                                            <label htmlFor="my-modal-5" className="btn  btn-xs" onClick={()=>{
+                                                setValues(currentValue.fullNames,currentValue.role,currentValue.email,currentValue.phoneNumber,currentValue.gender,currentValue.profileUrl);
+                                                 setId(currentValue._id);}
+                                                }>Edit</label>
                                             <button className="btn btn-error  btn-xs">Delete</button>
                                         </div>
                                     </td>
@@ -233,7 +239,7 @@ function Dashboard() {
 <input type="checkbox" id="my-modal-5" className="modal-toggle" />
 <div className="modal">
   <div className="modal-box w-11/12 max-w-5xl">
-    <h3 className="font-bold text-lg">Modify User Data</h3>
+    <h3 className="font-bold text-lg">Modify User Data</h3>{id}
     <form onSubmit={handleSubmit}>
                         {/* {values.confirmPassword},{values.password},{values.gender} */}
                         <div>
