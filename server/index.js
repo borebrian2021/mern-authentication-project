@@ -50,6 +50,7 @@ app.post('/api/login', async (req, res) => {
 
 //RESET PASSWORD
 app.post('/api/send-reset-code', async (req, res) => {
+    console.log(req.body)
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
 
@@ -80,16 +81,13 @@ app.post('/api/send-reset-code', async (req, res) => {
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
                 console.log(error);
-            } else {
+            } else  {
                 console.log('Email sent: ' + info.response);
             }
         });
-
     }
 
-    const resetCode = crypto.randomBytes(20).toString('hex');
-    user.resetCode = resetCode;
-    await user.save();
+   
 
 
 })

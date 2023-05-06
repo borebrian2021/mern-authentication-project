@@ -19,27 +19,27 @@ function ResetPass() {
     //Email change field
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
-      };
-      
-      //Code change field
+    };
+
+    //Code change field
     const handleCodeChange = (event) => {
         setEmail(event.target.value);
-      }; 
-      //Code change field
+    };
+    //Code change field
     const handleSetPass = (event) => {
         setEmail(event.target.value);
-      }; 
-      //Code change field
+    };
+    //Code change field
     const handleRepeatPass = (event) => {
         setEmail(event.target.value);
-      };
+    };
 
     //SEND CODE
-      const handleSendCode =()=>{
+    const handleSendCode = () => {
 
 
-        
-      }
+
+    }
     //HANDLING CHANGES TO THE FORM INPUTS
     function handleChange(e) {
 
@@ -47,8 +47,53 @@ function ResetPass() {
         setLogin({ ...login, [key]: e.target.value });
     }
 
+    //SEND VERIFICATION CODE VIA MAIL
+    const sendVerificationCode = (event) => {
+        event.preventDefault();
+
+        // alert('working')
+        fetch("http://localhost:1337/api/send-reset-code", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email: email
+
+            })
+
+        }).then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                toast.success('Verification sent successfully!')
+                setTimeout(gotLogin(), 3000);
+            })
+            .catch((err) => {
+                //console.log(err.message);
+
+                toast.error('Failed to login')
+            });
 
 
+
+
+
+
+
+
+
+
+        // setLogin({
+        //     ...login,
+        //     email: "",
+        //     password: ""
+        // });
+
+
+
+
+
+    }
 
 
     return (
@@ -60,12 +105,14 @@ function ResetPass() {
                     </p>
 
                     <div>
-                        {status === 1 ? <form onSubmit={handleSendCode}>
+                        {status === 1 ? <form onSubmit={sendVerificationCode}>
                             <div>
+                          <p>{email}</p>  
+
                                 <lable className="text-sm font-medium leading-none text-gray-800">Enter code sent to:</lable>
-                                <input value={email} onChange={()=>handleEmailChange()} name placeholder="Enter email adress" role="input" type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
-                          
-                           </div>
+                                <input value={email} onChange={handleEmailChange} name placeholder="Enter email adress" role="input" type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+
+                            </div>
                             <div className="mt-8">
                                 <button role="button" aria-label="create my account" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">
                                     Send verification
@@ -75,8 +122,8 @@ function ResetPass() {
                         </form> : status === 2 ? <form onSubmit={handleConfirmMail}>
                             <div>
                                 <lable className="text-sm font-medium leading-none text-gray-800">Enter email</lable>
-                                <input value={code} onChange={()=>handleCodeChange()} placeholder="Enter code sent to email here" role="input" type="number" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
-                               
+                                <input value={code} onChange={() => handleCodeChange()} placeholder="Enter code sent to email here" role="input" type="number" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+
                             </div>
                             <div className="mt-8">
                                 <button role="button" aria-label="create my account" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">
@@ -86,14 +133,14 @@ function ResetPass() {
                         </form> : <form onSubmit={handleConfirmMail}>
                             <div>
                                 <lable className="text-sm font-medium leading-none text-gray-800">Enter new password</lable>
-                                <input value={newPass} onChange={()=>handleSetPass()} name placeholder="Enter email adress" role="input" type="password" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                                <input value={newPass} onChange={() => handleSetPass()} name placeholder="Enter email adress" role="input" type="password" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
                             </div>
                             <div>
                                 <lable className="text-sm font-medium leading-none text-gray-800">Repeat new password</lable>
-                                <input value={repeatPass} onChange={()=>handleRepeatPass()} name placeholder="Enter email adress" role="input" type="password" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                                <input value={repeatPass} onChange={() => handleRepeatPass()} name placeholder="Enter email adress" role="input" type="password" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
                             </div>
                             <div className="mt-8">
-                                <button  role="button" aria-label="create my account" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">
+                                <button role="button" aria-label="create my account" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">
                                     Submit
                                 </button>
                             </div>
