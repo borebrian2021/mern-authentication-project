@@ -160,14 +160,16 @@ app.post('/api/update-user', async (req, res) => {
         user.gender = req.body.gender;
         user.profileLink = req.body.profileLink;
         await user.save();
-        return res.json({ status: 'ok',data:user, message: "User Updated successfully!" })
+        return res.json({ status: 'ok', data: user, message: "User Updated successfully!" })
 
     } else {
         return res.json({ status: 'error', message: "User uodate fail!" })
 
     }
 })
-//UPDATE USER PASSWORD
+
+
+//UPDATE USER DETAILS
 app.get('/api/get-users', async (req, res) => {
 
 
@@ -182,6 +184,25 @@ app.get('/api/get-users', async (req, res) => {
     }
 
 })
+
+
+
+
+//DELETE USER
+app.delete('/api/delete-user/:id', async (req, res) => {
+    try{
+    await User.findOneAndDelete({ _id: req.params.id });
+   
+        return res.json({ status: 'ok',message: "User deleted successfully!" })
+
+    }
+    catch (err) {
+        return res.json({ status: 'error',  message: "Failed to delete" })
+        
+        }
+
+    })
+
 
 //REGISTER USER ENDPOINT
 app.post('/api/register', async (req, res) => {
