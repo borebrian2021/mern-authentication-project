@@ -35,7 +35,11 @@ function ResetPass() {
       };
 
     //SEND CODE
+      const handleSendCode =()=>{
 
+
+        
+      }
     //HANDLING CHANGES TO THE FORM INPUTS
     function handleChange(e) {
 

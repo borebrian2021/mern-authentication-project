@@ -4,7 +4,7 @@ const cors = require('cors')
 const mangoose = require('mongoose')
 const User = require('./models/user.models')
 const jwt = require("jsonwebtoken")
-
+const crypto = require('crypto');
 //CONFIGURE CORS
 app.use(cors())
 app.use(express.json())
@@ -44,6 +44,14 @@ app.post('/api/login', async (req, res) => {
 
 })
 
+
+
+//RESET PASSWORD
+app.post('/api/reset', async (req, res) => {
+
+
+
+})
 
 
 //REGISTER USER ENDPOINT
