@@ -8,6 +8,7 @@ import toast, { Toaster } from 'react-hot-toast';
 function Home() {
 const navigate = useNavigate();
 const [userName,setUserName]=useState("");
+const [role,setRole]=useState("");
 
     // LETS VERIFY IF USER IS LOGED IN
     useEffect(() => {
@@ -24,6 +25,13 @@ const [userName,setUserName]=useState("");
             }
             else {
                 setUserName(user.name)
+                if (user.role=='1') {
+                setRole("Admin")
+                }
+                else{
+                    setRole("Regular User")
+
+                }
                 console.log(user)
                 toast.success("Welcome " + user.name)
                
@@ -31,9 +39,6 @@ const [userName,setUserName]=useState("");
         }
 
     }, [])
-
-
-
     return (
         <>
             <div className="hero  ">
@@ -41,7 +46,8 @@ const [userName,setUserName]=useState("");
                 <div className="hero-content flex-col lg:flex-row">
                     <img src="https://res.cloudinary.com/dqab6gg7d/image/upload/v1683296721/mern-authentication/pexels-tain%C3%A1-bernard-3586091_o1ub2a.jpg" className="max-w-sm rounded-lg shadow-2xl h-[200px]" />
                     <div>
-                        <h5 className="text-4xl ">{userName}</h5>
+                    <span className="badge badge-lg ">{userName}</span><br/>
+                        <span className="badge badge-lg mt-2 ">{role}</span>
                         <h5 className="text-4xl ">Welcome To The home of champions!</h5>
                         <div className="avatar-group -space-x-6">
                             <div className="avatar">
@@ -66,7 +72,7 @@ const [userName,setUserName]=useState("");
                             </div>
                         </div>
                         <p className="py-6">Keep visiting for more cool updates</p>
-                        <button className="btn btn-primary">Get Started</button>
+                        {/* <button className="btn btn-primary">Get Started</button> */}
                     </div>
                 </div>
             </div>
