@@ -3,17 +3,13 @@ import { useNavigate } from "react-router-dom";
 
 function ResetPass() {
     const [sidebar, setsidebar] = useState();
-    const navigate =useNavigate();
+    const navigate = useNavigate();
 
     //INSTANSTIATE VARIABLES
-    const [login, setLogin] = useState({
-        
-        email: "",
-        password: "",
-    
-    });
-
-    function gotLogin(){
+    const [email, setEmail] = useState();
+    const [code, setCode] = useState();
+    const [status, setStatus] = useState(false);
+    function gotLogin() {
         navigate('/Home')
     }
 
@@ -32,31 +28,39 @@ function ResetPass() {
         <div className="h-full bg-gradient-to-tl from-green-400 to-indigo-900 w-full py-16 px-4">
             <div className="flex flex-col items-center justify-center">
                 <div className="bg-white shadow rounded lg:w-1/3  md:w-1/2 w-full p-10 mt-4">
-                <p tabIndex={0} role="heading" aria-label="Login to your account" className="text-2xl font-extrabold leading-6 mb-3 text-gray-800">
+                    <p tabIndex={0} role="heading" aria-label="Login to your account" className="text-2xl font-extrabold leading-6 mb-3 text-gray-800">
                         Reset password .
                     </p>
-                    <form onSubmit={handleConfirmMail}>
-                    <div>
-                        <lable className="text-sm font-medium leading-none text-gray-800">Enter email</lable>
-                        <input placeholder="Enter email adress" role="input" type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
-                    </div> 
-                    </form>
 
-                    <form onSubmit={handleSendCode}>
                     <div>
-                        <lable className="text-sm font-medium leading-none text-gray-800">Enter code sent to:</lable>
-                        <input placeholder="Enter verification code here" role="input" type="number" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                        {status ? <form onSubmit={handleSendCode}>
+                            <div>
+                                <lable className="text-sm font-medium leading-none text-gray-800">Enter code sent to:</lable>
+                                <input placeholder="Enter verification code here" role="input" type="number" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                            </div>
+                            <div className="mt-8">
+                                <button role="button" aria-label="create my account" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">
+                                    Send verification
+                                </button>
+                            </div>
+
+                        </form> : <form onSubmit={handleConfirmMail}>
+                            <div>
+                                <lable className="text-sm font-medium leading-none text-gray-800">Enter email</lable>
+                                <input name placeholder="Enter email adress" role="input" type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                            </div>
+                            <div className="mt-8">
+                                <button role="button" aria-label="create my account" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">
+                                    Submit
+                                </button>
+                            </div>
+                        </form>} 
                     </div>
-                    </form>
-                  
-                   
-                  
-                    <div className="mt-8">
-                        <button role="button" aria-label="create my account" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">
-                           Reset Password
-                        </button>
-                    </div>
-                  
+
+
+
+
+
                     <p className="text-sm mt-4 font-medium leading-none text-gray-500">
                         Dont have account?{" "}
                         <span tabIndex={0} role="link" aria-label="Sign up here" className="text-sm font-medium leading-none underline text-gray-800 cursor-pointer">
@@ -78,9 +82,9 @@ function ResetPass() {
                         </svg>
                         <p className="text-base font-medium ml-4 text-gray-700">Continue with Google</p>
                     </button>
-                 
-                  
-                  
+
+
+
                 </div>
             </div>
         </div>
