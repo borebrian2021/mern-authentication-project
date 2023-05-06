@@ -12,8 +12,8 @@ function ResetPass() {
     const [newPass, setNewPass] = useState();
     const [repeatPass, setRepeatPass] = useState();
     const [status, setStatus] = useState(1);
-    function gotLogin() {
-        navigate('/Home')
+    function goHome() {
+        navigate('/')
     }
 
 
@@ -119,6 +119,48 @@ function ResetPass() {
                 toast.error('Failed to login')
             });
     }
+
+    
+ //SET NEW PASSWORD
+ const handleSetNewPass = (event) => {
+    event.handleSetNewPass();
+    //lets check if the password matches
+if(newPass===repeatPass){
+    // alert('working')
+    fetch("http://localhost:1337/api/change-password", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            email: email,
+            code: code
+
+        })
+
+    }).then((res) => res.json())
+        .then((data) => {
+
+
+            if (data.status == "ok") {
+                console.log(data);
+                toast.success('Password changed successful!')
+                goHome();
+                setStatus(1)
+            } else {
+                toast.error('Something went wrong!')
+            }
+        })
+        .catch((err) => {
+            //console.log(err.message);
+
+            toast.error('Failed to login')
+        });
+}
+else{
+    toast.warn("Password do not match!");
+}
+}
 
 
     return (

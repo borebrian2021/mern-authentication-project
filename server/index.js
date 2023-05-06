@@ -94,8 +94,7 @@ app.post('/api/send-reset-code', async (req, res) => {
 
 })
 
-//VERIFY CODE
-//RESET PASSWORD
+//VERIFY CODE 
 app.post('/api/verify-reset-code', async (req, res) => {
 
 
@@ -112,7 +111,23 @@ app.post('/api/verify-reset-code', async (req, res) => {
     }
 })
 
+//RESET PASSWORD
+app.post('/api/change-password', async (req, res) => {
 
+
+    const user = await User.findOne({ email: req.body.email, code: req.body.code });
+    if (user) {
+        user.password = req.password;
+        user.reset = false;
+        user.code='000000'
+        await user.save();
+        return res.json({ status:'ok', message: "Password reset success!" })
+
+    } else {
+        return res.json({ status: 'error', message: "Password reset  fail!" })
+
+    }
+})
 
 //REGISTER USER ENDPOINT
 app.post('/api/register', async (req, res) => {
