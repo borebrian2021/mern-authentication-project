@@ -130,6 +130,23 @@ app.post('/api/change-password', async (req, res) => {
     }
 })
 
+
+//GET ALL USERS PASSWORD
+app.get('/api/get-users', async (req, res) => {
+
+   
+   try{
+    const users = await User.find();
+    return res.json({ status:'ok',data:users, message: "Users retrieved successfully!" })
+   }
+    catch(err){
+
+    return res.json({ status: 'error', message: "Failed to get users!" })
+
+    }
+
+})
+
 //REGISTER USER ENDPOINT
 app.post('/api/register', async (req, res) => {
 

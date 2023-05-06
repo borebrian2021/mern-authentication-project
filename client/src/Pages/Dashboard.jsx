@@ -1,9 +1,49 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
+import toast, { Toaster } from 'react-hot-toast';
 
 function Dashboard() {
     const [sidebar, setsidebar] = useState();
+
+   useEffect(() => {
+        fetch("http://localhost:1337/api/get-users", {
+        }).then((res) => res.json())
+            .then((data) => {
+                if (data.status == "ok") {
+                    console.log(data)
+                }
+                else {
+                }
+
+            })
+            .catch((err) => {
+                //console.log(err.message);
+
+                toast.error('Something went wrong')
+            });
+        },[])
+
+
+
+
+
+
+
+
+
+        // setLogin({
+        //     ...login,
+        //     email: "",
+        //     password: ""
+        // });
+
+
+
+
+
+    
     return (
         <div className=" bg-gradient-to-tl from-green-400 to-indigo-900 w-full py-16 px-4">
+            <Toaster/>
             <div className="  items-center justify-center bg-white shadow rounded  p-10 mt-2">
                 <p tabIndex={0} role="heading" aria-label="Login to your account" className="text-2xl font-extrabold leading-6 mb-3 text-gray-800">
                     Welcome Brian,
@@ -142,6 +182,6 @@ function Dashboard() {
             </div>
         </div>
     );
-}
+    }
 
 export default Dashboard;
