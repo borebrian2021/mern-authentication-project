@@ -29,11 +29,11 @@ function ResetPass() {
     };
     //Code change field
     const handleSetPass = (event) => {
-        setEmail(event.target.value);
+        setNewPass_(event.target.value);
     };
     //Code change field
     const handleRepeatPass = (event) => {
-        setEmail(event.target.value);
+        setRepeatPass_(event.target.value);
     };
 
     //SEND CODE
@@ -50,12 +50,12 @@ function ResetPass() {
     }
 
     //CHANGE LOADING STATE
-    const changeLoading =()=>{
+    const changeLoading = () => {
         setLoading(!loading);
     }
 
     //SEND VERIFICATION CODE VIA MAIL
-    async function   sendVerificationCode(event){
+    async function sendVerificationCode(event) {
         event.preventDefault();
         changeLoading();
         // alert('working')
@@ -78,6 +78,8 @@ function ResetPass() {
                     toast.success('Verification sent successfully!')
                     setStatus(2)
                 } else {
+                    changeLoading();
+
                     toast.error('Verification sent failed, email provided does not exist')
                     setEmail("")
                 }
@@ -87,7 +89,7 @@ function ResetPass() {
 
                 toast.error('Failed to login')
             });
-            changeLoading()
+        changeLoading()
 
     }
 
@@ -143,7 +145,7 @@ function ResetPass() {
                 body: JSON.stringify({
                     email: email,
                     code: code,
-                    newPass: repeatPass_
+                    password: repeatPass_
 
                 })
 
@@ -167,7 +169,7 @@ function ResetPass() {
                 });
         }
         else {
-            toast.warn("Password do not match!");
+            toast.error("Password do not match!");
         }
     }
 

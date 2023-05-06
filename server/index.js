@@ -117,7 +117,7 @@ app.post('/api/change-password', async (req, res) => {
 
     const user = await User.findOne({ email: req.body.email, code: req.body.code });
     if (user) {
-        user.password = req.password;
+        user.password = req.body.password;
         user.reset = false;
         user.code='000000'
         await user.save();

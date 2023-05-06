@@ -46,9 +46,15 @@ function Login() {
 
             }).then((res) => res.json())
             .then((data) => {
-              localStorage.setItem('token',data.user)
-              toast.success('Login success')
-              setTimeout(gotLogin(), 3000);
+                if(data.status=="ok"){
+                    localStorage.setItem('token',data.user)
+                    toast.success('Login success')
+                    setTimeout(gotLogin(), 3000);
+                }
+                else{
+                    toast.error('Invalid credentials!')
+                }
+            
             })
             .catch((err) => {
               //console.log(err.message);
