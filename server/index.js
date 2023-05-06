@@ -21,6 +21,7 @@ try{
     await User.create({
         fullNames: req.body.fullNames,
         email: req.body.email,
+        role:req.body.role,
         phoneNumber: req.body.phoneNumber,
         gender: req.body.gender,
         profileUrl: req.body.profileLink,
