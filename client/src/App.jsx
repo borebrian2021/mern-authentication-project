@@ -16,9 +16,10 @@ function App() {
   const [count, setCount] = useState(0)
   const [adminCheck, setAdminCheck] = useState(false)
   const [loginCheck, setLoginCheck] = useState(false)
+  const token = localStorage.getItem('token')
+
   //UPDATE NAVBAR MENU BASED ON CURRENT USER LOGGED IN
   useEffect(() => {
-    const token = localStorage.getItem('token')
     // const history = useHistory()
     console.log(token)
 
@@ -61,7 +62,7 @@ function App() {
         <Route path="/Signup" element={<Signup />} />
         <Route path="/ResetPass" element={<ResetPass />} />
         <Route path="/Dashboard" element={<Dashboard />} />
-        <Route path="/Home" element={<Home />} />
+        <Route path="/Home" element={token? <Home />:<Login/>}/>
         {/* <Login/> */}
         {/* <Signup/> */}
         {/* <ResetPass/> */}

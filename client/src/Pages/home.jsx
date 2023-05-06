@@ -12,6 +12,7 @@ const [role,setRole]=useState("");
 
     // LETS VERIFY IF USER IS LOGED IN
     useEffect(() => {
+
         const token = localStorage.getItem('token')
         // const history = useHistory()
         console.log(token)
@@ -20,11 +21,12 @@ const [role,setRole]=useState("");
             const user = jwt(token)
             console.log(user)
             if (!user) {
-               
                 localStorage.removeItem('token')
+                alert("none")
                 navigate('/')
             }
             else {
+
                 setUserName(user.name)
                 if (user.role=='1') {
                 setRole("Admin")
