@@ -50,7 +50,7 @@ app.post('/api/login', async (req, res) => {
 
 //RESET PASSWORD
 app.post('/api/send-reset-code', async (req, res) => {
-    const user = await User.findOne(req.body.email);
+    const user = await User.findOne({ email: req.body.email });
     if (!user) {
 
         return res.json({ status: 'error', message: "Email does not exist!" })
@@ -59,30 +59,31 @@ app.post('/api/send-reset-code', async (req, res) => {
 
         const resetCode = crypto.randomBytes(20).toString('hex');
         user.code = resetCode;
+        user.reset = true;
         await user.save();
 
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-              user: 'bkimutai2021@gmail.com',
-              pass: 'yourpassword'
+                user: 'bkimutai2021@gmail.com',
+                pass: 'yourpassword'
             }
-          });
+        });
 
-          const mailOptions = {
+        const mailOptions = {
             from: 'bkimutai2021@gmail.com',
             to: user.email,
             subject: 'Password Reset Code',
             text: `Your password reset code is: ${resetCode}`
-          };
+        };
 
-          transporter.sendMail(mailOptions, function(error, info){
+        transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
-              console.log(error);
+                console.log(error);
             } else {
-              console.log('Email sent: ' + info.response);
+                console.log('Email sent: ' + info.response);
             }
-          });
+        });
 
     }
 
@@ -95,12 +96,24 @@ app.post('/api/send-reset-code', async (req, res) => {
 
 //VERIFY CODE
 //RESET PASSWORD
-app.post('/api/send-reset-code', async (req, res) => {
+app.post('/api/verify-reset-code', async (req, res) => {
+
+
+    const user = await User.findOne({ email: req.email, code: req.code });
+    if (user) {
+        user.password = req.password;
+        user.reset = false;
+        await user.save();
+        return res.json({ status: 'OK', message: "Password reset successfully!" })
+
+    } else {
+        return res.json({ status: 'error', message: "Password reset fail!" })
+
+    }
+})
 
 
 
-    
-}
 //REGISTER USER ENDPOINT
 app.post('/api/register', async (req, res) => {
 
