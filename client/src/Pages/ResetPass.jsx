@@ -73,6 +73,44 @@ function ResetPass() {
                     setStatus(2)
                 } else {
                     toast.error('Verification sent failed, email provided does not exist')
+                    setEmail("")
+                }
+            })
+            .catch((err) => {
+                //console.log(err.message);
+
+                toast.error('Failed to login')
+            });
+    }
+
+
+ //CONFIRM CODE SENT TO EMAIL HERE
+    const handleConfirmCode = (event) => {
+        event.preventDefault();
+
+        // alert('working')
+        fetch("http://localhost:1337/api/verify-reset-code", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email: email,
+                code: code
+
+            })
+
+        }).then((res) => res.json())
+            .then((data) => {
+
+
+                if (data.status == "ok") {
+                    console.log(data);
+                    toast.success('Code Verification successful!')
+                    setStatus(3)
+                } else {
+                    toast.error('Wrong verification code!')
+                    setCode("")
                 }
             })
             .catch((err) => {
@@ -88,14 +126,15 @@ function ResetPass() {
             <Toaster />
             <div className="flex flex-col items-center justify-center">
                 <div className="bg-white shadow rounded lg:w-1/3  md:w-1/2 w-full p-10 mt-4">
-                    <p tabIndex={0} role="heading" aria-label="Login to your account" className="text-2xl font-extrabold leading-6 mb-3 text-gray-800">
-                        Reset password .
-                    </p>
+                  
 
                     <div>
                         {status === 1 ? <form onSubmit={sendVerificationCode}>
                             <div>
-                                <p>{email}</p>
+                            <p tabIndex={0} role="heading" aria-label="Login to your account" className="text-2xl font-extrabold leading-6 mb-3 text-gray-800">
+                        Enter email to reset password.
+                    </p>
+                                {/* <p>{email}</p> */}
 
                                 <lable className="text-sm font-medium leading-none text-gray-800">Enter code sent to:</lable>
                                 <input value={email} onChange={handleEmailChange} name placeholder="Enter email adress" role="input" type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
@@ -107,9 +146,11 @@ function ResetPass() {
                                 </button>
                             </div>
 
-                        </form> : status === 2 ? <form onSubmit={handleConfirmMail}>
+                        </form> : status === 2 ? <form onSubmit={handleConfirmCode}>
                             <div>
-                                <lable className="text-sm font-medium leading-none text-gray-800">Enter email</lable>
+                            <p tabIndex={0} role="heading" aria-label="Login to your account" className="   leading-6 mb-3 text-gray-800">
+                        Enter code sent to {email}.
+                    </p>
                                 <input value={code} onChange={() => handleCodeChange()} placeholder="Enter code sent to email here" role="input" type="number" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
 
                             </div>

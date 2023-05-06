@@ -101,13 +101,13 @@ app.post('/api/verify-reset-code', async (req, res) => {
 
     const user = await User.findOne({ email: req.email, code: req.code });
     if (user) {
-        user.password = req.password;
-        user.reset = false;
-        await user.save();
-        return res.json({ status: 'OK', message: "Password reset successfully!" })
+        // user.password = req.password;
+        // user.reset = false;
+        // await user.save();
+        return res.json({ status: 'ok', message: "Code verification success!" })
 
     } else {
-        return res.json({ status: 'error', message: "Password reset fail!" })
+        return res.json({ status: 'error', message: "Code verification fail!" })
 
     }
 })
