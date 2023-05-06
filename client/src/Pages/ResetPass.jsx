@@ -1,7 +1,33 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function ResetPass() {
     const [sidebar, setsidebar] = useState();
+    const navigate =useNavigate();
+
+    //INSTANSTIATE VARIABLES
+    const [login, setLogin] = useState({
+        
+        email: "",
+        password: "",
+    
+    });
+
+    function gotLogin(){
+        navigate('/Home')
+    }
+
+
+    //HANDLING CHANGES TO THE FORM INPUTS
+    function handleChange(e) {
+
+        const key = e.target.id;
+        setLogin({ ...login, [key]: e.target.value });
+    }
+
+
+
+
     return (
         <div className="h-full bg-gradient-to-tl from-green-400 to-indigo-900 w-full py-16 px-4">
             <div className="flex flex-col items-center justify-center">
@@ -9,14 +35,19 @@ function ResetPass() {
                 <p tabIndex={0} role="heading" aria-label="Login to your account" className="text-2xl font-extrabold leading-6 mb-3 text-gray-800">
                         Reset password .
                     </p>
+                    <form onSubmit={handleConfirmMail}>
                     <div>
                         <lable className="text-sm font-medium leading-none text-gray-800">Enter email</lable>
                         <input placeholder="Enter email adress" role="input" type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
                     </div> 
+                    </form>
+
+                    <form onSubmit={handleSendCode}>
                     <div>
                         <lable className="text-sm font-medium leading-none text-gray-800">Enter code sent to:</lable>
                         <input placeholder="Enter verification code here" role="input" type="number" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
                     </div>
+                    </form>
                   
                    
                   

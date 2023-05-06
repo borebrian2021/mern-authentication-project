@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from 'react-hot-toast';
+import { NavLink } from "react-router-dom";
 
 function Login() {
     const [sidebar, setsidebar] = useState();
@@ -115,10 +116,19 @@ function Login() {
                   
                     <p className="text-sm mt-4 font-medium leading-none text-gray-500">
                         Dont have account?{" "}
-                        <span tabIndex={0} role="link" aria-label="Sign up here" className="text-sm font-medium leading-none underline text-gray-800 cursor-pointer">
+                        <NavLink
+                     to="/Signup"   className="text-sm font-medium leading-none underline text-gray-800 cursor-pointer">
+                            
+                            Create account
+                        </NavLink>
+                        <br/>
+                        <br/>
+                        <NavLink
+                     to="/ResetPass" role="link" aria-label="Sign up here" className="text-sm font-medium leading-none underline text-gray-800 cursor-pointer">
                             {" "}
-                            Sign up here
-                        </span>
+                            Reset Password
+                        </NavLink> 
+                       
                     </p>
                     <div className="w-full flex items-center justify-between py-5">
                         <hr className="w-full bg-gray-400" />
