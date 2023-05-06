@@ -58,7 +58,7 @@ app.post('/api/send-reset-code', async (req, res) => {
     }
     else {
 
-        const resetCode = crypto.randomBytes(20).toString('hex');
+        const resetCode =Math.floor(100000 + Math.random() * 900000);
         user.code = resetCode;
         user.reset = true;
         await user.save();
