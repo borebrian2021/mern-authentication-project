@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
 import Axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
-
+ const navigate =useNavigate();
     //LETS SET CONTROLED FORMS
     const [uploadFile, setUploadFile] = useState("");
     const [signup, setSignup] = useState({
         fullNames: "",
         email: "",
+        role:"1",
         phoneNumber: "+254",
         gender: "",
         profileLink: "https://res.cloudinary.com/dqab6gg7d/image/upload/v1683296721/mern-authentication/pexels-tain%C3%A1-bernard-3586091_o1ub2a.jpg",
@@ -16,6 +18,11 @@ function Signup() {
         confirmPassword: "",
 
     });
+
+    //NAVIGATE TO LOGIN AFTER SIGNUP
+    function gotLogin(){
+        navigate('/')
+    }
 
 
     //HANDLING CHANGES TO THE FORM INPUTS
@@ -30,7 +37,7 @@ function Signup() {
     const handleSubmit = (event) => {
         event.preventDefault();
         if (signup.password === signup.confirmPassword) {
-            alert('working')
+            // alert('working')
 
             fetch("http://localhost:1337/api/register", {
                 method: "POST",
@@ -40,6 +47,7 @@ function Signup() {
                 body: JSON.stringify({
                     fullNames: signup.fullNames,
                     email: signup.email,
+                    role:signup.role,
                     phoneNumber: signup.phoneNumber,
                     gender: signup.gender,
                     profileLink: signup.profileLink,
@@ -48,9 +56,10 @@ function Signup() {
                 }),
             }).then((res) => res.json())
                 .then((response) => {
-                    setClient({
-                        ...client,
+                    setSignup({
+                        ...signup,
                         fullNames: "",
+                        role:"",
                         email: "",
                         phoneNumber: "+254",
                         gender: "",
@@ -62,6 +71,7 @@ function Signup() {
 
                     // console.log(response);
                     toast.success('Submitted successfully!')
+                    setTimeout(gotLogin(), 3000);
 
                 })
             // .error((error) => {
@@ -116,12 +126,19 @@ function Signup() {
                             <lable className="text-sm font-medium leading-none text-gray-800">Phone numer</lable>
                             <input id="phoneNumber" value={signup.phoneNumber} onChange={handleChange} placeholder="Phone number" role="input" type="text" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
                         </div>
-                        <div>
+                        <div className="mt-3">
                             <lable className="text-sm font-medium leading-none text-gray-800">Select Gender</lable>
                             <select id="gender" value={signup.gender} onChange={handleChange} className="select select-success  w-full max-w-xs">
                                 <option selected>Pick your Gender </option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
+                            </select>
+                        </div> <div className="mt-3">
+                            <lable className="text-sm font-medium leading-none text-gray-800">Select role</lable>
+                            <select id="role" value={signup.role} onChange={handleChange} className="select select-success  w-full max-w-xs">
+                                <option selected>Select role</option>
+                                <option value="1">User</option>
+                                <option value="2">Admin</option>
                             </select>
                         </div>
                         <div>

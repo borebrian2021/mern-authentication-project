@@ -1,23 +1,85 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from 'react-hot-toast';
 
 function Login() {
     const [sidebar, setsidebar] = useState();
+    const navigate =useNavigate();
+    //LETS SET CONTROLED FORMS
+    const [uploadFile, setUploadFile] = useState("");
+    const [login, setLogin] = useState({
+        
+        email: "",
+        password: "",
+    
+    });
+
+    function gotLogin(){
+        navigate('/')
+    }
+
+
+    //HANDLING CHANGES TO THE FORM INPUTS
+    function handleChange(e) {
+
+        const key = e.target.id;
+        setLogin({ ...login, [key]: e.target.value });
+    }
+
+
+    //LOGIN DATA TO BACKEND
+    const handleSubmit = (event) => {
+        event.preventDefault();
+   
+            // alert('working')
+            fetch("http://localhost:1337/api/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: login.email,
+                    password: login.password,
+
+                })
+
+            }).then((res) => res.json())
+                .then((response) => {
+                    alert('sent')
+                    setLogin({
+                        ...login,
+                        email: "",
+                        password: ""
+                    });
+
+                    // console.log(response);
+                    toast.success('Login success')
+                    // setTimeout(gotLogin(), 3000);
+
+                })
+  
+    }
+
     return (
+
         <div className="h-full bg-gradient-to-tl from-green-400 to-indigo-900 w-full py-16 px-4">
+            <Toaster />
             <div className="flex flex-col items-center justify-center">
                
                 <div className="bg-white shadow rounded lg:w-1/3  md:w-1/2 w-full p-10 mt-16">
                 <p tabIndex={0} role="heading" aria-label="Login to your account" className="text-2xl font-extrabold leading-6 mb-3 text-gray-800">
                         Login to your account
                     </p>
+
+                    <form onSubmit={handleSubmit}>
                     <div>
                         <lable className="text-sm font-medium leading-none text-gray-800">Email</lable>
-                        <input aria-label="enter email adress" role="input" type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                        <input id="email" value={login.email} onChange={handleChange} aria-label="Enter email adress" role="input" type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
                     </div>
                     <div className="mt-6  w-full">
                         <lable className="text-sm font-medium leading-none text-gray-800">Password</lable>
                         <div className="relative flex items-center justify-center">
-                            <input aria-label="enter Password" role="input" type="password" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                            <input id="password" value={login.password} onChange={handleChange} aria-label="Enter Password" role="input" type="password" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
                             <div className="absolute right-0 mt-2 mr-3 cursor-pointer">
                                 <svg width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -29,10 +91,11 @@ function Login() {
                         </div>
                     </div>
                     <div className="mt-8">
-                        <button role="button" aria-label="create my account" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">
+                        <button role="button" aria-label="create my account" type="submit" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">
                             Create my account
                         </button>
                     </div>
+                    </form>
                   
                     <p className="text-sm mt-4 font-medium leading-none text-gray-500">
                         Dont have account?{" "}

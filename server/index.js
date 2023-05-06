@@ -3,6 +3,7 @@ const app =express()
 const cors =require('cors')
 const mangoose =require('mongoose')
 const User = require('./models/user.models')
+const jwt=require("jsonwebtoken")
 
 //CONFIGURE CORS
 app.use(cors())
@@ -12,6 +13,37 @@ app.use(express.json())
 
 //CONNECT TO DB
 mangoose.connect('mongodb://localhost:27017/mern-auth')
+
+
+//LOGIN USER ENDPOINT
+app.post('/api/login', async (req,res)=>{
+    try{
+    const user =await User.findOne({
+        email : req.body.email,
+        password:req.body.password,
+    })
+    console.log(user)
+if (user){
+    const token =jwt.sign({
+        name:user.fullNames,
+        email:user.email,
+        role:user.role
+    },
+    'mern-assesement2023'
+    )
+    return res.json({status:"ok",user:token})
+}
+else{
+    return res.json({status:'error', user:false})
+}
+    }
+    catch(err){
+    return res.json({status:err })
+
+    }
+
+})
+
 
 
 //REGISTER USER ENDPOINT
@@ -33,7 +65,7 @@ res.json({status:"OK", error:"Data inserted successfully!"})
 }
 catch (err) {
 console.log(err)
-res.json({status:err, error:"Duplicate email address"})
+res.json({status:req.body})
 }
 
 })
