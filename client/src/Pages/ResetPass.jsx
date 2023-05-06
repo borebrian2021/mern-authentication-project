@@ -9,8 +9,9 @@ function ResetPass() {
     //INSTANSTIATE VARIABLES
     const [email, setEmail] = useState();
     const [code, setCode] = useState();
-    const [newPass, setNewPass] = useState();
-    const [repeatPass, setRepeatPass] = useState();
+    const [loading, setLoading] = useState(false);
+    const [newPass_, setNewPass_] = useState("");
+    const [repeatPass_, setRepeatPass_] = useState("");
     const [status, setStatus] = useState(1);
     function goHome() {
         navigate('/')
@@ -48,10 +49,15 @@ function ResetPass() {
         setLogin({ ...login, [key]: e.target.value });
     }
 
-    //SEND VERIFICATION CODE VIA MAIL
-    const sendVerificationCode = (event) => {
-        event.preventDefault();
+    //CHANGE LOADING STATE
+    const changeLoading =()=>{
+        setLoading(!loading);
+    }
 
+    //SEND VERIFICATION CODE VIA MAIL
+    async function   sendVerificationCode(event){
+        event.preventDefault();
+        changeLoading();
         // alert('working')
         fetch("http://localhost:1337/api/send-reset-code", {
             method: "POST",
@@ -81,10 +87,12 @@ function ResetPass() {
 
                 toast.error('Failed to login')
             });
+            changeLoading()
+
     }
 
 
- //CONFIRM CODE SENT TO EMAIL HERE
+    //CONFIRM CODE SENT TO EMAIL HERE
     const handleConfirmCode = (event) => {
         event.preventDefault();
 
@@ -120,47 +128,48 @@ function ResetPass() {
             });
     }
 
-    
- //SET NEW PASSWORD
- const handleSetNewPass = (event) => {
-    event.handleSetNewPass();
-    //lets check if the password matches
-if(newPass===repeatPass){
-    // alert('working')
-    fetch("http://localhost:1337/api/change-password", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            email: email,
-            code: code
 
-        })
+    //SET NEW PASSWORD
+    const handleSetNewPass = (event) => {
+        event.preventDefault();
+        //lets check if the password matches
+        if (newPass_ === repeatPass_) {
+            // alert('working')
+            fetch("http://localhost:1337/api/change-password", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: email,
+                    code: code,
+                    newPass: repeatPass_
 
-    }).then((res) => res.json())
-        .then((data) => {
+                })
+
+            }).then((res) => res.json())
+                .then((data) => {
 
 
-            if (data.status == "ok") {
-                console.log(data);
-                toast.success('Password changed successful!')
-                goHome();
-                setStatus(1)
-            } else {
-                toast.error('Something went wrong!')
-            }
-        })
-        .catch((err) => {
-            //console.log(err.message);
+                    if (data.status == "ok") {
+                        console.log(data);
+                        toast.success('Password changed successful!')
+                        goHome();
+                        setStatus(1)
+                    } else {
+                        toast.error('Something went wrong!')
+                    }
+                })
+                .catch((err) => {
+                    //console.log(err.message);
 
-            toast.error('Failed to login')
-        });
-}
-else{
-    toast.warn("Password do not match!");
-}
-}
+                    toast.error('Failed to login')
+                });
+        }
+        else {
+            toast.warn("Password do not match!");
+        }
+    }
 
 
     return (
@@ -168,55 +177,56 @@ else{
             <Toaster />
             <div className="flex flex-col items-center justify-center">
                 <div className="bg-white shadow rounded lg:w-1/3  md:w-1/2 w-full p-10 mt-4">
-                  
+
 
                     <div>
                         {status === 1 ? <form onSubmit={sendVerificationCode}>
                             <div>
-                            <p tabIndex={0} role="heading" aria-label="Login to your account" className="text-2xl font-extrabold leading-6 mb-3 text-gray-800">
-                        Enter email to reset password.
-                    </p>
+                                <p tabIndex={0} role="heading" aria-label="Login to your account" className="text-2xl font-extrabold leading-6 mb-3 text-gray-800">
+                                    Enter email to reset password.
+                                </p>
                                 {/* <p>{email}</p> */}
 
                                 <lable className="text-sm font-medium leading-none text-gray-800">Enter code sent to:</lable>
                                 <input value={email} onChange={handleEmailChange} name placeholder="Enter email adress" role="input" type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
 
                             </div>
-                            <div className="mt-8">
-                                <button role="button" aria-label="create my account" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">
+                            <div className="mt-8 flex text-center justify-center  align-middle">
+                                {loading ? <img src="https://res.cloudinary.com/dqab6gg7d/image/upload/v1683389201/mern-authentication/loading-gif_jfmsqu.gif" className="h-4 w-4" /> : <button role="button" aria-label="create my account" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">
                                     Send verification
-                                </button>
+                                </button>}
+
                             </div>
 
                         </form> : status === 2 ? <form onSubmit={handleConfirmCode}>
                             <div>
-                            <p tabIndex={0} role="heading" aria-label="Login to your account" className="   leading-6 mb-3 text-gray-800">
-                        Enter code sent to {email}.
-                    </p>
+                                <p tabIndex={0} role="heading" aria-label="Login to your account" className="   leading-6 mb-3 text-gray-800">
+                                    Enter code sent to {email}.
+                                </p>
                                 <input value={code} onChange={handleCodeChange} placeholder="Enter code sent to email here" role="input" type="number" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
 
                             </div>
                             <div className="mt-8">
-                                
+
                                 <button role="button" aria-label="create my account" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">
-                                    Submit 
+                                    Submit
                                 </button>
                                 <p className="text-sm mt-4 font-medium leading-none text-gray-500">
-                        Wrong email?{" "}
-                        <span onClick={()=>{setStatus(1),setEmail("")}} tabIndex={0} role="link" aria-label="Sign up here" className="text-sm font-medium leading-none underline text-gray-800 cursor-pointer">
-                            {" "}
-                            Click here
-                        </span>
-                    </p>
+                                    Wrong email?{" "}
+                                    <span onClick={() => { setStatus(1), setEmail("") }} tabIndex={0} role="link" aria-label="Sign up here" className="text-sm font-medium leading-none underline text-gray-800 cursor-pointer">
+                                        {" "}
+                                        Click here
+                                    </span>
+                                </p>
                             </div>
                         </form> : <form onSubmit={handleSetNewPass}>
                             <div>
                                 <lable className="text-sm font-medium leading-none text-gray-800">Enter new password</lable>
-                                <input value={newPass} onChange={() => handleSetPass()} name placeholder="Enter email adress" role="input" type="password" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                                <input value={newPass_} onChange={handleSetPass} placeholder="Enter new password" role="input" type="password" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
                             </div>
                             <div>
                                 <lable className="text-sm font-medium leading-none text-gray-800">Repeat new password</lable>
-                                <input value={repeatPass} onChange={() => handleRepeatPass()} name placeholder="Enter email adress" role="input" type="password" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                                <input value={repeatPass_} onChange={handleRepeatPass} name placeholder="Repeat new password" role="input" type="password" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
                             </div>
                             <div className="mt-8">
                                 <button role="button" aria-label="create my account" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">
@@ -230,7 +240,7 @@ else{
 
 
 
-                  
+
                     <div className="w-full flex items-center justify-between py-5">
                         <hr className="w-full bg-gray-400" />
                         <p className="text-base font-medium leading-4 px-2.5 text-gray-400">OR</p>
