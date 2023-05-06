@@ -6,14 +6,44 @@ function Dashboard() {
     const [users, setUsers] = useState([]);
 
 
+    //CONTROLLED FORMS
+    const [fullNames, setFullNames] = useState('');
+    const [email, setEmail] = useState('');
+    const [profileUrl, setProfileUrl] = useState('');
+    const [gender, setGender] = useState('');
+    const [role, setRole] = useState('');
 
+    //SET VALUES
+    const handleFullnames = (e) => {
+        setFullyNames(e.target.value);
+    }
+
+    const handleEmail = (e) => {
+        setEmail(e.target.value);
+
+
+    }
+    const handleProfileUrl = (e) => {
+        setProfileUrl(e.target.value);
+
+
+    }
+    const handleGender = (e) => {
+        setGender(e.target.value);
+
+
+    }
+    const handleRole = (e) => {
+        setRole(e.target.value);
+
+    }
     useEffect(() => {
         fetch("http://localhost:1337/api/get-users", {
         }).then((res) => res.json())
             .then((data) => {
                 if (data.status == "ok") {
                     console.log(data.data)
-                setUsers(data.data)
+                    setUsers(data.data)
                 }
                 else {
                 }
@@ -76,26 +106,26 @@ function Dashboard() {
                         <tbody>
                             {users.map((currentValue, index, array) => (
                                 <tr>
-                                    <th>{index+1}</th>
+                                    <th>{index + 1}</th>
 
-                                    <td><input aria-label="enter email adress" role="input" value="Cy Ganderton" type="email" className=" border border-blue-500 rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                                    <td><p>{currentValue.fullNames}</p>
                                     </td>
 
                                     <td>
                                         <div className="avatar">
                                             <div className="mask mask-squircle w-12 h-12">
-                                                <img src="https://res.cloudinary.com/dqab6gg7d/image/upload/v1683296721/mern-authentication/pexels-tain%C3%A1-bernard-3586091_o1ub2a.jpg" alt="Avatar Tailwind CSS Component" />
+                                                <img src={currentValue.profileUrl} alt="Avatar Tailwind CSS Component" />
                                             </div>
                                         </div>
                                     </td>
-                                    <td> <input aria-label="enter email adress" role="input" value="Cy Ganderton" type="email" className=" border border-blue-500 rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-1 w-full pl-1 mt-1" />
+                                    <td>
+                                    <p>{currentValue.gender}</p>
                                     </td>
-                                    <td> <input aria-label="enter email adress" role="input" value="Cy Ganderton" type="password" className=" border border-blue-500 rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                                    <td> <p>********</p>
                                     </td>
-                                    <td> <input aria-label="enter email adress" role="input" value="Cy Ganderton" type="email" className=" border border-blue-500 rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                                    <td> <p>{currentValue.email}</p>
                                     </td>
-                                    <td> <input aria-label="enter email adress" role="input" value="Cy Ganderton" type="number" className=" border border-blue-500 rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
-                                    </td>
+                                    <td> <p>{currentValue.role=="1"?"Regular User":"Admin"}</p></td>
                                     <td>
                                         <div className="btn-group">
                                             <button className="btn btn-error  btn-xs">Delete</button>
