@@ -43,24 +43,26 @@ function Login() {
 
                 })
 
-            }).then((res) => {
-                
-                res.json()
-                // console.log(res);
-                alert(res.user)
-                if(res.status == 200){
-
-                    toast.success('Login success')
-                    setTimeout(gotLogin(), 3000);
-                }
-                else{
-                    toast.error('Invalid login credentials')
-                }
-            
-            }
+            }).then((res) => res.json())
+            .then((data) => {
+              localStorage.setItem('token',data.user)
+              toast.success('Login success')
+              setTimeout(gotLogin(), 3000);
+            })
+            .catch((err) => {
+              //console.log(err.message);
+             
+              toast.error('Failed to login')        
+            });
             
             
-            )
+            
+           
+            
+            
+            
+            
+            
               
                     // setLogin({
                     //     ...login,

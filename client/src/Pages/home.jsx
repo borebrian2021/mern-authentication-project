@@ -1,8 +1,14 @@
-import React, { Component, useEffect } from 'react';
+import React, { Component, useEffect,useState } from 'react';
 import jwt from 'jwt-decode';
+import { useNavigate } from "react-router-dom";
+
+
 
 import toast, { Toaster } from 'react-hot-toast';
 function Home() {
+const navigate = useNavigate();
+const [userName,setUserName]=useState("");
+
     // LETS VERIFY IF USER IS LOGED IN
     useEffect(() => {
         const token = localStorage.getItem('token')
@@ -10,14 +16,17 @@ function Home() {
         console.log(token)
 
         if (token) {
-            const user = jwt.decode(token)
+            const user = jwt(token)
             if (!user) {
-                toast.success("Welcome " + user.fullNames)
                
+                localStorage.removeItem('token')
+                navigate('/')
             }
             else {
-                localStorage.removeItem('token')
-                history.replace('/')
+                setUserName(user.name)
+                console.log(user)
+                toast.success("Welcome " + user.name)
+               
             }
         }
 
@@ -32,6 +41,7 @@ function Home() {
                 <div className="hero-content flex-col lg:flex-row">
                     <img src="https://res.cloudinary.com/dqab6gg7d/image/upload/v1683296721/mern-authentication/pexels-tain%C3%A1-bernard-3586091_o1ub2a.jpg" className="max-w-sm rounded-lg shadow-2xl h-[200px]" />
                     <div>
+                        <h5 className="text-4xl ">{userName}</h5>
                         <h5 className="text-4xl ">Welcome To The home of champions!</h5>
                         <div className="avatar-group -space-x-6">
                             <div className="avatar">
