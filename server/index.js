@@ -38,7 +38,7 @@ app.post('/api/login', async (req, res) => {
         }
     }
     catch (err) {
-        return res.json({ status: err })
+        return res.json({ status: "error", message: "Error occured while loging in" })
 
     }
 
@@ -48,7 +48,21 @@ app.post('/api/login', async (req, res) => {
 
 //RESET PASSWORD
 app.post('/api/reset', async (req, res) => {
+    const user = await User.findOne(req.body.email);
+    if (!user) {
 
+        return res.json({ status: 'error', message: "Email does not exist!" })
+    }
+    else {
+
+        const resetCode = crypto.randomBytes(20).toString('hex');
+        user.code = resetCode;
+        await user.save();
+    }
+
+    const resetCode = crypto.randomBytes(20).toString('hex');
+    user.resetCode = resetCode;
+    await user.save();
 
 
 })
