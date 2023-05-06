@@ -24,7 +24,7 @@ function ResetPass() {
 
     //Code change field
     const handleCodeChange = (event) => {
-        setEmail(event.target.value);
+        setCode(event.target.value);
     };
     //Code change field
     const handleSetPass = (event) => {
@@ -151,15 +151,23 @@ function ResetPass() {
                             <p tabIndex={0} role="heading" aria-label="Login to your account" className="   leading-6 mb-3 text-gray-800">
                         Enter code sent to {email}.
                     </p>
-                                <input value={code} onChange={() => handleCodeChange()} placeholder="Enter code sent to email here" role="input" type="number" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                                <input value={code} onChange={handleCodeChange} placeholder="Enter code sent to email here" role="input" type="number" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
 
                             </div>
                             <div className="mt-8">
+                                
                                 <button role="button" aria-label="create my account" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">
-                                    Submit
+                                    Submit 
                                 </button>
+                                <p className="text-sm mt-4 font-medium leading-none text-gray-500">
+                        Wrong email?{" "}
+                        <span onClick={()=>{setStatus(1),setEmail("")}} tabIndex={0} role="link" aria-label="Sign up here" className="text-sm font-medium leading-none underline text-gray-800 cursor-pointer">
+                            {" "}
+                            Click here
+                        </span>
+                    </p>
                             </div>
-                        </form> : <form onSubmit={handleConfirmMail}>
+                        </form> : <form onSubmit={handleSetNewPass}>
                             <div>
                                 <lable className="text-sm font-medium leading-none text-gray-800">Enter new password</lable>
                                 <input value={newPass} onChange={() => handleSetPass()} name placeholder="Enter email adress" role="input" type="password" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
@@ -180,13 +188,7 @@ function ResetPass() {
 
 
 
-                    <p className="text-sm mt-4 font-medium leading-none text-gray-500">
-                        Dont have account?{" "}
-                        <span tabIndex={0} role="link" aria-label="Sign up here" className="text-sm font-medium leading-none underline text-gray-800 cursor-pointer">
-                            {" "}
-                            Log in here
-                        </span>
-                    </p>
+                  
                     <div className="w-full flex items-center justify-between py-5">
                         <hr className="w-full bg-gray-400" />
                         <p className="text-base font-medium leading-4 px-2.5 text-gray-400">OR</p>

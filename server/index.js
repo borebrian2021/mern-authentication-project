@@ -99,7 +99,7 @@ app.post('/api/send-reset-code', async (req, res) => {
 app.post('/api/verify-reset-code', async (req, res) => {
 
 
-    const user = await User.findOne({ email: req.email, code: req.code });
+    const user = await User.findOne({ email: req.body.email, code: req.body.code });
     if (user) {
         // user.password = req.password;
         // user.reset = false;
