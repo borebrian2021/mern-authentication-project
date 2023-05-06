@@ -5,6 +5,8 @@ const mangoose = require('mongoose')
 const User = require('./models/user.models')
 const jwt = require("jsonwebtoken")
 const crypto = require('crypto');
+const nodemailer = require('nodemailer');
+
 //CONFIGURE CORS
 app.use(cors())
 app.use(express.json())
@@ -47,7 +49,7 @@ app.post('/api/login', async (req, res) => {
 
 
 //RESET PASSWORD
-app.post('/api/reset', async (req, res) => {
+app.post('/api/send-reset-code', async (req, res) => {
     const user = await User.findOne(req.body.email);
     if (!user) {
 
@@ -58,6 +60,30 @@ app.post('/api/reset', async (req, res) => {
         const resetCode = crypto.randomBytes(20).toString('hex');
         user.code = resetCode;
         await user.save();
+
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+              user: 'bkimutai2021@gmail.com',
+              pass: 'yourpassword'
+            }
+          });
+
+          const mailOptions = {
+            from: 'bkimutai2021@gmail.com',
+            to: user.email,
+            subject: 'Password Reset Code',
+            text: `Your password reset code is: ${resetCode}`
+          };
+
+          transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+            }
+          });
+
     }
 
     const resetCode = crypto.randomBytes(20).toString('hex');
@@ -67,7 +93,14 @@ app.post('/api/reset', async (req, res) => {
 
 })
 
+//VERIFY CODE
+//RESET PASSWORD
+app.post('/api/send-reset-code', async (req, res) => {
 
+
+
+    
+}
 //REGISTER USER ENDPOINT
 app.post('/api/register', async (req, res) => {
 
