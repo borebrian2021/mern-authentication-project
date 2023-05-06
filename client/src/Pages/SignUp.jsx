@@ -9,10 +9,10 @@ function Signup() {
     const [signup, setSignup] = useState({
         fullNames: "",
         email: "",
-    phoneNumber:"+254",
-    gender:"",
-    profileLink:"https://res.cloudinary.com/dqab6gg7d/image/upload/v1683296721/mern-authentication/pexels-tain%C3%A1-bernard-3586091_o1ub2a.jpg",
-    password:"",
+        phoneNumber: "+254",
+        gender: "",
+        profileLink: "https://res.cloudinary.com/dqab6gg7d/image/upload/v1683296721/mern-authentication/pexels-tain%C3%A1-bernard-3586091_o1ub2a.jpg",
+        password: "",
         confirmPassword: "",
 
     });
@@ -32,7 +32,7 @@ function Signup() {
         if (signup.password === signup.confirmPassword) {
             alert('working')
 
-            fetch("http://localhost/api/register", {
+            fetch("http://localhost:1337/api/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -64,10 +64,10 @@ function Signup() {
                     toast.success('Submitted successfully!')
 
                 })
-                // .error((error) => {
-                //     toast.error('Failed to submit')
+            // .error((error) => {
+            //     toast.error('Failed to submit')
 
-                // })
+            // })
         }
         else {
 
@@ -103,7 +103,7 @@ function Signup() {
                         Signup for your account
                     </p>
                     <form onSubmit={handleSubmit}>
-                        {signup.confirmPassword},{signup.password},{signup.gender}
+                        {/* {signup.confirmPassword},{signup.password},{signup.gender} */}
                         <div>
                             <lable className="text-sm font-medium leading-none text-gray-800">Full Names</lable>
                             <input id="fullNames" value={signup.fullNames} onChange={handleChange} placeholder="Enter full names" role="input" type="text" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
@@ -119,7 +119,7 @@ function Signup() {
                         <div>
                             <lable className="text-sm font-medium leading-none text-gray-800">Select Gender</lable>
                             <select id="gender" value={signup.gender} onChange={handleChange} className="select select-success  w-full max-w-xs">
-                                <option  selected>Pick your Gender </option>
+                                <option selected>Pick your Gender </option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                             </select>
