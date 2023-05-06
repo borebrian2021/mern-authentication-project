@@ -15,7 +15,7 @@ function Login() {
     });
 
     function gotLogin(){
-        navigate('/')
+        navigate('/Home')
     }
 
 
@@ -43,20 +43,34 @@ function Login() {
 
                 })
 
-            }).then((res) => res.json())
-                .then((response) => {
-                    alert('sent')
-                    setLogin({
-                        ...login,
-                        email: "",
-                        password: ""
-                    });
+            }).then((res) => {
+                
+                res.json()
+                // console.log(res);
+                alert(res.user)
+                if(res.status == 200){
 
-                    // console.log(response);
                     toast.success('Login success')
-                    // setTimeout(gotLogin(), 3000);
+                    setTimeout(gotLogin(), 3000);
+                }
+                else{
+                    toast.error('Invalid login credentials')
+                }
+            
+            }
+            
+            
+            )
+              
+                    // setLogin({
+                    //     ...login,
+                    //     email: "",
+                    //     password: ""
+                    // });
+                   
+                  
 
-                })
+              
   
     }
 
