@@ -65,40 +65,27 @@ function ResetPass() {
 
         }).then((res) => res.json())
             .then((data) => {
-                console.log(data);
-                toast.success('Verification sent successfully!')
-                setTimeout(gotLogin(), 3000);
+
+
+                if (data.status == "ok") {
+                    console.log(data);
+                    toast.success('Verification sent successfully!')
+                    setStatus(2)
+                } else {
+                    toast.error('Verification sent failed, email provided does not exist')
+                }
             })
             .catch((err) => {
                 //console.log(err.message);
 
                 toast.error('Failed to login')
             });
-
-
-
-
-
-
-
-
-
-
-        // setLogin({
-        //     ...login,
-        //     email: "",
-        //     password: ""
-        // });
-
-
-
-
-
     }
 
 
     return (
         <div className="h-full bg-gradient-to-tl from-green-400 to-indigo-900 w-full py-16 px-4">
+            <Toaster />
             <div className="flex flex-col items-center justify-center">
                 <div className="bg-white shadow rounded lg:w-1/3  md:w-1/2 w-full p-10 mt-4">
                     <p tabIndex={0} role="heading" aria-label="Login to your account" className="text-2xl font-extrabold leading-6 mb-3 text-gray-800">
@@ -108,7 +95,7 @@ function ResetPass() {
                     <div>
                         {status === 1 ? <form onSubmit={sendVerificationCode}>
                             <div>
-                          <p>{email}</p>  
+                                <p>{email}</p>
 
                                 <lable className="text-sm font-medium leading-none text-gray-800">Enter code sent to:</lable>
                                 <input value={email} onChange={handleEmailChange} name placeholder="Enter email adress" role="input" type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />

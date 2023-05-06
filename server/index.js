@@ -83,6 +83,8 @@ app.post('/api/send-reset-code', async (req, res) => {
                 console.log(error);
             } else  {
                 console.log('Email sent: ' + info.response);
+        return res.json({ status: 'ok', message: "Email sent successfully!" })
+
             }
         });
     }
