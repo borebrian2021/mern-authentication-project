@@ -16,15 +16,15 @@ function Dashboard({ updateLoginCheck }) {
             }
         }).then((res) => res.json())
             .then((data) => {
-               
-              if(data.status == "ok") {
-             
+
+                if (data.status == "ok") {
+
                     setTrail(data.data)
                     setAuthCheck(true)
-                    console.log(data.status)
-                } 
-                else{
-                     setAuthCheck(false)
+                    console.log(data.data)
+                }
+                else {
+                    setAuthCheck(false)
                 }
             })
             .catch((err) => {
@@ -59,15 +59,18 @@ function Dashboard({ updateLoginCheck }) {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th >1</th>
-                                <td>Cy Ganderton</td>
-                                <td>Quality Control Specialist</td>
-                                <td>Littel, Schaden and Vandervort</td>
-                                <td>Canada</td>
-                                <td>12/16/2020</td>
-                                <td>Blue</td>
-                            </tr>
+                            {trail.map((currentValue, index, array) => (
+
+                                <tr>
+                                    <th >{index+1}</th>
+                                    <td>{currentValue.userID}</td>
+                                    <td>{currentValue.role===1?"Regulary user":"Administrator"}</td>
+                                    <td>{currentValue.name}</td>
+                                    <td>{currentValue.action}</td>
+                                    <td>{currentValue.time}</td>
+                                    
+                                </tr>))}
+
 
 
                         </tbody>
