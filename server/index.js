@@ -20,7 +20,7 @@ mangoose.connect('mongodb://localhost:27017/mern-auth')
 //LOGIN USER ENDPOINT
 app.post('/api/login', async (req, res) => {
     try {
-        const expiresIn = 180;
+        const expiresIn = 1800;
         const user = await User.findOne({
             email: req.body.email,
             password: req.body.password,
@@ -135,14 +135,13 @@ app.post('/api/change-password', async (req, res) => {
 app.get('/api/get-users', async (req, res) => {
 
 const token =req.headers['x-access-token']
-const decode =jwt.verify(token,'mern-assesement2023')
-console.log(token)
+
     try {
         const decode =jwt.verify(token,'mern-assesement2023')
         console.log(token)
 
         const users = await User.find();
-        return res.json({ status: 'ok', admin:decode.role, data: users, message: "Users retrieved successfully!" })
+        return res.json({ status: 'ok', admin:decode.role, data: users,username:decode.fullNames, message: "Users retrieved successfully!" })
     }
     catch (err) {
 

@@ -6,6 +6,8 @@ function Dashboard() {
     const [users, setUsers] = useState([]);
     const [id, setId] = useState([]);
     const [updateUser, setUpdateUser] = useState([]);
+    const [isAdmin,setIsAdmin] = useState();
+    const [sessionExpired,setSessionExpired] = useState(false);
 
 
     //CONTROLLED FORMS
@@ -162,11 +164,20 @@ function Dashboard() {
                     }
                 }).then((res) => res.json())
                     .then((data) => {
-                        if (data.status == "ok") {
+                        if (data.status == "ok" && data.admin==1) {
+                            setIsAdmin(false)
+                            console.log(data.data)
+                            setUsers(data.data)
+                        }
+                        else if(data.status == "ok" && data.admin==2){
+                            setIsAdmin(true)
                             console.log(data.data)
                             setUsers(data.data)
                         }
                         else {
+                            
+                            setSessionExpired(true);
+
                         }
 
                     })
@@ -213,7 +224,7 @@ function Dashboard() {
                         <div className="overflow-x-auto">
                             <table className="table table-compact w-full">
                                 <thead>
-                                    <tr >
+                                    {isAdmin?  <tr >
                                         <th></th>
                                         <th className="text-1xl">Name</th>
                                         <th>Profile pic</th>
@@ -222,9 +233,19 @@ function Dashboard() {
                                         <th>Email</th>
                                         <th>Role</th>
                                         <th>Action</th>
-                                    </tr>
+                                    </tr>: <tr >
+                                        <th></th>
+                                        <th className="text-1xl">Name</th>
+                                        <th>Profile pic</th>
+                                        <th>Gender</th>
+                                        <th>Email</th>
+                                        <th>Action</th>
+
+                                       
+                                    </tr>}
+                                   
                                 </thead>
-                                <tbody>
+                                <tbody>{isAdmin?<>
                                     {users.map((currentValue, index, array) => (
                                         <tr>
                                             <th>{index + 1}</th>
@@ -260,18 +281,71 @@ function Dashboard() {
                                                     }}>Delete</button>
                                                 </div>
                                             </td>
-                                        </tr>))}
+                                        </tr>))}</>:
+                                        <>
+                                        {users.map((currentValue, index, array) => (
+                                            <tr>
+                                                <th>{index + 1}</th>
+    
+                                                <td><p>{currentValue.fullNames}</p>
+                                                </td>
+    
+                                                <td>
+                                                    <div className="avatar">
+                                                        <div className="mask mask-squircle w-12 h-12">
+                                                            <img src={currentValue.profileUrl} alt="Avatar Tailwind CSS Component" />
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <p>{currentValue.gender}</p>
+                                                </td>
+                                               
+                                                <td> <p>{currentValue.email}</p>
+                                                
+                                                </td>
+                                                <td>
+                                                <div className="btn-group">
+
+                                                  
+                                                    <button className="btn btn-error  btn-xs" onClick={(event)=>{
+                                                    toast('Please keep visiting, this feature is still under mentenance,Thank you.',
+                                                    {
+                                                      icon: '👏',
+                                                      style: {
+                                                        borderRadius: '10px',
+                                                        background: '#333',
+                                                        color: '#fff',
+                                                      },
+                                                    }
+                                                  );
+                                                    }}>Delete</button>
+                                                </div>
+                                            </td>
+                                               
+                                               
+                                            </tr>))}</>}
                                 </tbody>
                                 <tfoot>
-                                    <tr>
+                                {isAdmin?  <tr >
                                         <th></th>
-                                        <th>Name</th>
-                                        <th>Job</th>
-                                        <th>company</th>
-                                        <th>location</th>
-                                        <th>Last Login</th>
-                                        <th>Favorite Color</th>
-                                    </tr>
+                                        <th className="text-1xl">Name</th>
+                                        <th>Profile pic</th>
+                                        <th>Gender</th>
+                                        <th>Password</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Action</th>
+                                    </tr>: <tr >
+                                        <th></th>
+                                        <th className="text-1xl">Name</th>
+                                        <th>Profile pic</th>
+                                        <th>Gender</th>
+                                        <th>Email</th>
+                                        <th>Action</th>
+
+                                       
+                                    </tr>}
                                 </tfoot>
                             </table>
                         </div>
