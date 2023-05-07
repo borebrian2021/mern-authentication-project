@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import toast, { Toaster } from 'react-hot-toast';
+import { NavLink } from "react-router-dom";
 
 function Dashboard({ updateLoginCheck }) {
     const [userName, setUsername] = useState();
@@ -238,7 +239,7 @@ function Dashboard({ updateLoginCheck }) {
             {sessionExpired ? <div className="items-center justify-center align-center text-center   bg-white shadow rounded  p-20 mt-2">
 
                 <h3>Opps! You need to login first to access this page!</h3><br />
-                <NavLinl href="/" className="btn btn-sm">Take me to log in</NavLinl>
+                <NavLink to="/" className="btn btn-sm">Take me to log in</NavLink>
             </div> :
                 <div className=" bg-gradient-to-tl from-green-400 to-indigo-900 w-full py-16 px-4">
                     <Toaster />

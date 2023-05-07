@@ -6,7 +6,7 @@ import NavBar from './Components/NavBar'
 import Login from './Pages/Login'
 import Signup from './Pages/SignUp'
 import ResetPass from './Pages/ResetPass'
-import Dashboard from './Pages/Dashboard'
+import Dashboard from './Pages/Champions'
 import Home from './Pages/home'
 import './App.css'
 import jwt from 'jwt-decode';
