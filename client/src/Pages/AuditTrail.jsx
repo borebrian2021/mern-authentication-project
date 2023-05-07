@@ -46,6 +46,9 @@ function Dashboard({ updateLoginCheck }) {
             </div> :
 
                 <div className="overflow-x-auto">
+                <h3 className="ml-4 m" > Adit Trail</h3>
+                <h6 className="ml-4 mb-1">System Audit Trail: Track all changes made to the system. Secure, private, and transparent.</h6>
+
                     <table className="table table-compact w-[90%] m-4">
                         <thead>
                             <tr>

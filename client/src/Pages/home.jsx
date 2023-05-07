@@ -101,6 +101,7 @@ function Home({ updateLoginCheck }) {
                             </div>
                         </div>
                         <p className="py-6">Join our athlete signup website and elevate your game! Our platform connects you with coaches, teams, and scouts, providing exciting opportunities to showcase your skills and take your game to the next level.</p>
+                        <p className="py-6">Designed with ♥♥♥♥♥♥ by Brian Koskei Kimutai</p>
                         {/* <button className="btn btn-primary">Get Started</button> */}
                     </div>
                 </div>

@@ -119,12 +119,12 @@ function Login({updateLoginCheck}) {
                     <form onSubmit={handleSubmit}>
                     <div>
                         <lable className="text-sm font-medium leading-none text-gray-800">Email</lable>
-                        <input id="email" value={login.email} onChange={handleChange} aria-label="Enter email adress" role="input" type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                        <input id="email" required placeholder="Enter email" value={login.email} onChange={handleChange} aria-label="Enter email adress" role="input" type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
                     </div>
                     <div className="mt-4  w-full">
                         <lable className="text-sm font-medium leading-none text-gray-800">Password</lable>
                         <div className="relative flex items-center justify-center">
-                            <input id="password" value={login.password} onChange={handleChange} aria-label="Enter Password" role="input" type="password" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                            <input id="password" required placeholder="Enter password" value={login.password} onChange={handleChange} aria-label="Enter Password" role="input" type="password" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
                             <div className="absolute right-0 mt-2 mr-3 cursor-pointer">
                                 <svg width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path
