@@ -3,23 +3,24 @@ import toast, { Toaster } from 'react-hot-toast';
 import { NavLink } from "react-router-dom";
 
 function Dashboard({ updateLoginCheck }) {
-    const [trail,setTrail]=useState();
+    const [trail,setTrail]=useState([]);
+    const [authCkeck,setAuthCheck]=useState(false);
 
 
     
-    //CHECK LOGIN STATUS
+    //FETCH AUDIT TRAIL DATA
     useEffect(() => {
-        fetch("http://localhost:1337/api/check-status", {
+        fetch("http://localhost:1337/api/get-trail", {
           headers:{
               'x-access-token': localStorage.getItem('token'),
           }
       }).then((res) => res.json())
       .then((data) => {
-        data.status=="ok"? updateLoginCheck(true): updateLoginCheck(false)
+        data.status=="ok"? setTrail(data.data): setAuthCheck(true)
       })
       .catch((err) => {
           //console.log(err.message);
-          updateLoginCheck(false)
+          setAuthCheck(true)
       
       });
       

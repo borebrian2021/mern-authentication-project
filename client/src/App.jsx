@@ -7,6 +7,7 @@ import Login from './Pages/Login'
 import Signup from './Pages/SignUp'
 import ResetPass from './Pages/ResetPass'
 import Dashboard from './Pages/Champions'
+import AuditTrail from './Pages/AuditTrail'
 import Home from './Pages/home'
 import './App.css'
 import jwt from 'jwt-decode';
@@ -49,10 +50,8 @@ function App() {
         <Route path="/ResetPass" element={<ResetPass />} />
         <Route path="/Dashboard" element={<Dashboard updateLoginCheck={updateLoginCheck} /> } />
         <Route path="/Home" element={token? <Home updateLoginCheck={updateLoginCheck} />:<Login/>}/>
-        {/* <Login/> */}
-        {/* <Signup/> */}
-        {/* <ResetPass/> */}
-        {/* <Dashboard/> */}
+        <Route path="/AuditTrail" element={<AuditTrail />} />
+  
       </Routes>
 
     </div>
