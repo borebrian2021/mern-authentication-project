@@ -90,7 +90,7 @@ app.post('/api/login', async (req, res) => {
             )
 
             //LETS RECORD USER ACTION TO AUDIT TRAIL
-            insertTrail(user.id, user.fullNames, user.role, "Login Succesfully!");
+            insertTrail(user.email, user.fullNames, user.role, "Login Succesfully!");
 
             return res.json({ status: "ok", user: token, login: true })
         }
@@ -248,6 +248,9 @@ app.get('/api/check-status', async (req, res) => {
 
 //UPDATE USER PASSWORD
 app.post('/api/update-user', async (req, res) => {
+    const token = req.headers['x-access-token']
+    const decode = jwt.verify(token, 'mern-assesement2023')
+    try{
     const user = await User.findOne({ email: req.body.email, code: req.body.code })
     if (user) {
         user.fullNames = req.body.fullNames;
@@ -257,15 +260,22 @@ app.post('/api/update-user', async (req, res) => {
         user.gender = req.body.gender;
         user.profileLink = req.body.profileLink;
         await user.save();
-        insertTrail(user.email, user.name, user.role, "User Updated successfully!")
-
+        console.log(decode)
+        insertTrail(decode.email, decode.name, decode.role, "Updataed user successfully. User updated: "+req.body.email);
         return res.json({ status: 'ok', data: user, message: "User Updated successfully!" })
 
     } else {
-        insertTrail(req.body.email, req.body.email, "Uknown", "User uodate failure!")
+        insertTrail(decode.email, decode.fullNames, decode.role, "User Uodate failure! user modified:"+user.email);
         return res.json({ status: 'error', message: "User uodate fail!" })
 
     }
+}
+catch (e) {
+    insertTrail(req.body.email, req.body.email, "Uknown", "User uodate failure!")
+    return res.json({ status: 'error', message: "User uodate fail!" })
+
+
+}
 })
 
 

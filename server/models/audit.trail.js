@@ -11,7 +11,7 @@ const AuditTrail=new mongoose.Schema({
     time:{type:String,required:true},
  
 },{
-    collection:'audit-trail'
+    collection:'audit-trail-new'
 })
 
 const model = mongoose.model('AuditData',AuditTrail)

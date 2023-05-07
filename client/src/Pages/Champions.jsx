@@ -13,23 +13,23 @@ function Dashboard({ updateLoginCheck }) {
     //CHECK LOGIN STATUS
     useEffect(() => {
         fetch("http://localhost:1337/api/check-status", {
-          headers:{
-              'x-access-token': localStorage.getItem('token'),
-          }
-      }).then((res) => res.json())
-      .then((data) => {
-        data.status=="ok"? updateLoginCheck(true): updateLoginCheck(false)
-     
-      })
-      .catch((err) => {
-          //console.log(err.message);
-          updateLoginCheck(false)
+            headers: {
+                'x-access-token': localStorage.getItem('token'),
+            }
+        }).then((res) => res.json())
+            .then((data) => {
+                data.status == "ok" ? updateLoginCheck(true) : updateLoginCheck(false)
 
-      
-      
-      });
-      
-      },[])
+            })
+            .catch((err) => {
+                //console.log(err.message);
+                updateLoginCheck(false)
+
+
+
+            });
+
+    }, [])
 
 
     //CONTROLLED FORMS
@@ -111,7 +111,7 @@ function Dashboard({ updateLoginCheck }) {
 
     }
 
-    //SUBMIT DATA TO BACKEND
+    //UPDATE DATA TO BACKEND
     const handleSubmit = (event) => {
         event.preventDefault();
         if (values.password === values.confirmPassword) {
@@ -121,6 +121,8 @@ function Dashboard({ updateLoginCheck }) {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    'x-access-token': localStorage.getItem('token'),
+
                 },
                 body: JSON.stringify({
                     fullNames: values.fullNames,
@@ -246,13 +248,13 @@ function Dashboard({ updateLoginCheck }) {
                     <div className="  items-center justify-center bg-white shadow rounded  p-4 mt-2">
                         <p tabIndex={0} role="heading" className="text-1xl text-1xl leading-6 mb-3 text-gray-800">
                             Welcome {userName}
-                        </p> 
+                        </p>
                         <p tabIndex={0} role="heading" className="text-1xl text-1xl leading-6 mb-3 text-gray-800">
                             Champions  list
                         </p>
-                    
+
                         <div className="badge badge-md text-xs mb-8">{isAdmin ? "Administrator" : "Guest User"}</div>
-                       
+
                         {/* <p className="mb-8 w-[50%]">Connect with athletic champions through our website. Join now and engage with top athletes, gain inspiration and learn from their experiences.</p> */}
                         <div className="overflow-x-auto">
                             <table className="table table-compact w-full">

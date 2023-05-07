@@ -70,6 +70,7 @@ function Login({updateLoginCheck}) {
                 if(data.status=="ok"){
                     localStorage.setItem('token',data.user)
                     toast.success('Login success')
+                    console.log(data)
                     navigate('/home')
                 }
                 else{
