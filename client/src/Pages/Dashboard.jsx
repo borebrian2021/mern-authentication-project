@@ -208,7 +208,13 @@ function Dashboard() {
 
 
             return (
-                <div className=" bg-gradient-to-tl from-green-400 to-indigo-900 w-full py-16 px-4">
+                <>
+                {sessionExpired ? <div className="items-center justify-center align-center text-center   bg-white shadow rounded  p-20 mt-2">
+
+<h3>Session Expired</h3><br/>
+<a href="/" className="btn btn-sm">Log in</a>
+                    </div>:
+                     <div className=" bg-gradient-to-tl from-green-400 to-indigo-900 w-full py-16 px-4">
                     <Toaster />
                     <div className="  items-center justify-center bg-white shadow rounded  p-10 mt-2">
                         <p tabIndex={0} role="heading" aria-label="Login to your account" className="text-2xl font-extrabold leading-6 mb-3 text-gray-800">
@@ -406,6 +412,10 @@ function Dashboard() {
                         </div>
                     </div>
                 </div>
+                }
+              
+                </>
+               
             );
         }
 
