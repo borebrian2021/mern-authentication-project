@@ -33,7 +33,6 @@ function Home({ updateLoginCheck }) {
                 updateLoginCheck(false)
 
 
-
             });
 
     }, [])

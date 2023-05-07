@@ -95,7 +95,7 @@ app.post('/api/login', async (req, res) => {
             return res.json({ status: "ok", user: token, login: true })
         }
         else {
-            insertTrail(req.email, req.email, "Unknown", "Login failed! User not found")
+            insertTrail(req.body.email, req.body.email, "Unknown", "Login failed! User not found or wrong password")
 
             return res.json({ status: 'error', user: false, login: false })
         }
