@@ -134,14 +134,19 @@ app.post('/api/change-password', async (req, res) => {
 //GET ALL USERS PASSWORD
 app.get('/api/get-users', async (req, res) => {
 
-
+const token =req.headers['x-access-token']
+const decode =jwt.verify(token,'mern-assesement2023')
+console.log(token)
     try {
+        const decode =jwt.verify(token,'mern-assesement2023')
+        console.log(token)
+
         const users = await User.find();
-        return res.json({ status: 'ok', data: users, message: "Users retrieved successfully!" })
+        return res.json({ status: 'ok', admin:decode.role, data: users, message: "Users retrieved successfully!" })
     }
     catch (err) {
 
-        return res.json({ status: 'error', message: "Failed to get users!" })
+        return res.json({ error:err, status: 'error', message: "Session expried please log in again!" })
 
     }
 

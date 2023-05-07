@@ -59,6 +59,9 @@ function Dashboard() {
 
             fetch("http://localhost:1337/api/delete-user/"+id, {
                 method: "DELETE",
+                headers:{
+                    'x-access-token': localStorage.getItem('token'),
+                },
                
                 body: JSON.stringify({})
             }).then((res) => res.json())
@@ -154,6 +157,9 @@ function Dashboard() {
 
             useEffect(() => {
                 fetch("http://localhost:1337/api/get-users", {
+                    headers:{
+                        'x-access-token': localStorage.getItem('token'),
+                    }
                 }).then((res) => res.json())
                     .then((data) => {
                         if (data.status == "ok") {

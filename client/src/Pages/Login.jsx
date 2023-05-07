@@ -49,7 +49,7 @@ function Login() {
                 if(data.status=="ok"){
                     localStorage.setItem('token',data.user)
                     toast.success('Login success')
-                    setTimeout(gotLogin(), 3000);
+                    navigate('/home')
                 }
                 else{
                     toast.error('Invalid credentials!')

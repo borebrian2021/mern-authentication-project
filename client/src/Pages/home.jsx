@@ -1,47 +1,43 @@
 import React, { Component, useEffect,useState } from 'react';
 import jwt from 'jwt-decode';
-import { useNavigate } from "react-router-dom";
-
 
 
 import toast, { Toaster } from 'react-hot-toast';
 function Home() {
-const navigate = useNavigate();
+// const history = useHistory();
 const [userName,setUserName]=useState("");
 const [role,setRole]=useState("");
 
     // LETS VERIFY IF USER IS LOGED IN
-    useEffect(() => {
-
+   
         const token = localStorage.getItem('token')
         // const history = useHistory()
         console.log(token)
 
-        if (token) {
-            const user = jwt(token)
-            console.log(user)
-            if (!user) {
-                localStorage.removeItem('token')
-                alert("none")
-                navigate('/')
-            }
-            else {
+        // if (token) {
+        //     const user = jwt(token)
+        //     console.log(user)
+        //     if (!user) {
+        //         localStorage.removeItem('token')
+        //         alert("none")
+        //     }
+        //     else {
 
-                setUserName(user.name)
-                if (user.role=='1') {
-                setRole("Admin")
-                }
-                else{
-                    setRole("Regular User")
+        //         setUserName(user.name)
+        //         if (user.role=='1') {
+        //         setRole("Admin")
+        //         }
+        //         else{
+        //             setRole("Regular User")
 
-                }
-                console.log(user)
-                toast.success("Welcome " + user.name)
+        //         }
+        //         console.log(user)
+        //         toast.success("Welcome " + user.name)
                
-            }
-        }
+        //     }
+        // }
 
-    }, [])
+  
     return (
         <>
             <div className="hero  ">

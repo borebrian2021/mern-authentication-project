@@ -13,41 +13,14 @@ import jwt from 'jwt-decode';
 
 
 function App() {
-  const [count, setCount] = useState(0)
+  // const [dashboardAuth, setDashboardAuth] = useState(false)
   const [adminCheck, setAdminCheck] = useState(false)
   const [loginCheck, setLoginCheck] = useState(false)
   const token = localStorage.getItem('token')
+  const user = jwt(token)
 
   //UPDATE NAVBAR MENU BASED ON CURRENT USER LOGGED IN
-  useEffect(() => {
-    // const history = useHistory()
-    console.log(token)
-
-    if (token) {
-      const user = jwt(token)
-      if (!user) {
-
-        localStorage.removeItem('token')
-        navigate('/')
-      }
-      else {
-        // if (user.role == 2) {
-         
-        //   () => {
-    
-        //     setAdminCheck(true)
-        //   }
-        // }
-        // else {
-        //   () => {
-        //     setAdminCheck(false)
-        //   }
-        // }
-        setAdminCheck(true);
-      }
-    }
-
-  }, [])
+ 
 
 
   const updateStatus = (value) => {
@@ -61,7 +34,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/Signup" element={<Signup />} />
         <Route path="/ResetPass" element={<ResetPass />} />
-        <Route path="/Dashboard" element={<Dashboard />} />
+        <Route path="/Dashboard" element={<Dashboard /> } />
         <Route path="/Home" element={token? <Home />:<Login/>}/>
         {/* <Login/> */}
         {/* <Signup/> */}
