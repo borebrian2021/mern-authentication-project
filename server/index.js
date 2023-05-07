@@ -41,6 +41,36 @@ async function insertTrail(userID, name, role, action) {
         res.json({ status: req.body })
     }
 }
+
+
+//CHECK AUTH STATUS
+app.get('/api/get-trail', async (req, res) => {
+
+    const token = req.headers['x-access-token']
+
+    try {
+        const decode = jwt.verify(token, 'mern-assesement2023')
+        if(decode.role==1){
+
+            return res.json({ error: err, status: 'error', message: "Unauthorized" })
+        }
+        else{
+
+        const auditTrail = await AudiTrail.find();
+        return res.json({ status: 'ok', data:auditTrail, message: "Authenticated" })
+
+        }
+
+     
+    }
+    catch (err) {
+
+        return res.json({ error: err, status: 'error', message: "Unauthorized" })
+
+    }
+
+})
+
 //LOGIN USER ENDPOINT
 app.post('/api/login', async (req, res) => {
     try {
@@ -215,6 +245,7 @@ app.get('/api/check-status', async (req, res) => {
 
 
 
+
 //UPDATE USER PASSWORD
 app.post('/api/update-user', async (req, res) => {
     const user = await User.findOne({ email: req.body.email, code: req.body.code })
@@ -260,19 +291,18 @@ app.get('/api/get-users', async (req, res) => {
 //DELETE USER
 app.delete('/api/delete-user/:id', async (req, res) => {
     const token = req.headers['x-access-token']
-
-
     const decode = jwt.verify(token, 'mern-assesement2023')
-
     try {
         await User.findOneAndDelete({ _id: req.params.id });
 
-        insertTrail(req.body.email, req.body.email, "Uknown", "User uodate failure!")
+        insertTrail(decode.email, decode.name, decode.role, "Deleted user of ID:"+req.params.id)
 
         return res.json({ status: 'ok', message: "User deleted successfully!" })
 
     }
     catch (err) {
+        insertTrail(decode.email, decode.name, decode.role, "Failed to deleted user of ID:"+req.params.id)
+
         return res.json({ status: 'error', message: "Failed to delete" })
 
     }
@@ -294,11 +324,14 @@ app.post('/api/register', async (req, res) => {
             password: req.body.confirmPassword
 
         })
+        insertTrail(req.body.email, req.body.fullNames, req.body.role, "Account created successfully!")
+
         res.json({ status: "OK", error: "Data inserted successfully!" })
 
     }
     catch (err) {
         console.log(err)
+        
         res.json({ status: req.body })
     }
 
