@@ -1,7 +1,7 @@
 ## Athlethe Champions app
 ## By Brian Kimutai Koskei
 ## Screenshot
- ![image](./client/public/images/audit.JPG)
+ ![image](./client/public/images/landing.JPG)
  ## Table of Content
  - [Description](#description)
  - [Landing Page](#Landing-Page)

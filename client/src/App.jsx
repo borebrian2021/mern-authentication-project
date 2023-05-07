@@ -1,7 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
 import { Route, Routes } from "react-router-dom";
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import NavBar from './Components/NavBar'
 import Login from './Pages/Login'
 import Signup from './Pages/SignUp'
