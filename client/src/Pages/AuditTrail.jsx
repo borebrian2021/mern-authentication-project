@@ -64,7 +64,7 @@ function Dashboard({ updateLoginCheck }) {
                                 <tr>
                                     <th >{index+1}</th>
                                     <td>{currentValue.userID}</td>
-                                    <td>{currentValue.role===1?"Regulary user":"Administrator"}</td>
+                                    <td>{currentValue.role==1?"Regulary user":"Administrator"}</td>
                                     <td>{currentValue.name}</td>
                                     <td>{currentValue.action}</td>
                                     <td>{currentValue.time}</td>
