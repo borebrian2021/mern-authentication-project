@@ -21,7 +21,7 @@ function Login({updateLoginCheck}) {
     fetch("http://localhost:1337/api/check-status", {
       headers:{
           'x-access-token': localStorage.getItem('token'),
-      }
+      },
   }).then((res) => res.json())
   .then((data) => {
     data.status=="ok"? updateLoginCheck(true): updateLoginCheck(false)

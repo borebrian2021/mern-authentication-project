@@ -63,6 +63,9 @@ function ResetPass() {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+
+                'x-access-token': localStorage.getItem('token'),
+
             },
             body: JSON.stringify({
                 email: email
@@ -141,6 +144,8 @@ function ResetPass() {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    'x-access-token': localStorage.getItem('token'),
+
                 },
                 body: JSON.stringify({
                     email: email,
@@ -196,23 +201,23 @@ function ResetPass() {
                             <div className="mt-8 flex text-center justify-center  align-middle">
                                 {loading ? <img src="https://res.cloudinary.com/dqab6gg7d/image/upload/v1683389201/mern-authentication/loading-gif_jfmsqu.gif" className="h-4 w-4" /> : <button role="button" aria-label="create my account" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">
                                     Send verification
-                                </button>}<br/>
-                              
+                                </button>}<br />
+
 
                             </div>
                             <p className="text-sm mt-4 font-medium leading-none text-gray-500">
-                                    Have an account?{" "}
-                                    <NavLink  to="/" tabIndex={0} role="link" aria-label="Sign up here" className="text-sm font-medium leading-none underline text-gray-800 cursor-pointer">
-                                        {" "}
-                                       Log in
-                                    </NavLink></p>
+                                Have an account?{" "}
+                                <NavLink to="/" tabIndex={0} role="link" aria-label="Sign up here" className="text-sm font-medium leading-none underline text-gray-800 cursor-pointer">
+                                    {" "}
+                                    Log in
+                                </NavLink></p>
 
                         </form> : status === 2 ? <form onSubmit={handleConfirmCode}>
                             <div>
-                            <p tabIndex={0} role="heading" aria-label="Login to your account" className="text-1xl font-extrabold leading-6 mb-3 text-gray-800">
-                            Enter code sent to {email}.
+                                <p tabIndex={0} role="heading" aria-label="Login to your account" className="text-1xl font-extrabold leading-6 mb-3 text-gray-800">
+                                    Enter code sent to {email}.
                                 </p>
-                                
+
                                 <input value={code} onChange={handleCodeChange} placeholder="Enter code sent to email here" role="input" type="number" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
 
                             </div>
@@ -231,7 +236,7 @@ function ResetPass() {
                             </div>
                         </form> : <form onSubmit={handleSetNewPass}>
                             <div>
-                                
+
                                 <lable className="text-sm font-medium leading-none text-gray-800">Enter new password</lable>
                                 <input value={newPass_} onChange={handleSetPass} placeholder="Enter new password" role="input" type="password" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
                             </div>
