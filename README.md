@@ -1,7 +1,7 @@
-# Carrace Drinks
+## Athlethe Champions app
 ## By Brian Kimutai Koskei
 ## Screenshot
- ![image](./public/images/audit.JPG)
+ ![image](./client/public/images/audit.JPG)
  ## Table of Content
  - [Description](#description)
  - [Landing Page](#Landing-Page)
