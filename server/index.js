@@ -38,7 +38,7 @@ async function insertTrail(userID, name, role, action) {
     }
     catch (err) {
         console.log(err)
-        res.json({ status: req.body })
+       
     }
 }
 
@@ -90,7 +90,7 @@ app.post('/api/login', async (req, res) => {
             )
 
             //LETS RECORD USER ACTION TO AUDIT TRAIL
-            insertTrail(user.id, user.name, user.role, "Login Succesfully!");
+            insertTrail(user.id, user.fullNames, user.role, "Login Succesfully!");
 
             return res.json({ status: "ok", user: token, login: true })
         }

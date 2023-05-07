@@ -18,6 +18,7 @@ console.log(loginCheck)
   const navigation = loginCheck? [
     { name: 'Home', href: 'Home', current: true,status: "show" },
     { name: 'Champions', href: 'Dashboard', current: false ,status: "show"},
+    { name: 'AudiTrail', href: 'AuditTrail', current: false ,status: "show"},
     { name: 'Log Out', href: "" , current: false,status: logOut}
   ]: [
     { name: 'Login', href: '/', current: false,status: "show" },
