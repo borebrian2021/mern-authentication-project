@@ -24,7 +24,8 @@ const [role,setRole]=useState("");
       }
   }).then((res) => res.json())
   .then((data) => {
-    updateLoginCheck(true)
+    data.status=="ok"? updateLoginCheck(true): updateLoginCheck(false)
+
    
   })
   .catch((err) => {

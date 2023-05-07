@@ -1,25 +1,44 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from 'react-hot-toast';
 import { NavLink } from "react-router-dom";
 
-function Login() {
+function Login({updateLoginCheck}) {
     const [sidebar, setsidebar] = useState();
     const navigate =useNavigate();
     //LETS SET CONTROLED FORMS
     const [uploadFile, setUploadFile] = useState("");
-    const [login, setLogin] = useState({
-        
+    const [login, setLogin] = useState({  
         email: "",
         password: "",
-    
+
     });
 
-    function gotLogin(){
-        navigate('/Home')
-    }
+   //REMOVE SESSION TOKEN
+   useEffect(() => {
+    localStorage.removeItem('token');
+    sessionStorage.removeItem('token'); 
+    fetch("http://localhost:1337/api/check-status", {
+      headers:{
+          'x-access-token': localStorage.getItem('token'),
+      }
+  }).then((res) => res.json())
+  .then((data) => {
+    data.status=="ok"? updateLoginCheck(true): updateLoginCheck(false)
+
+   
+  })
+  .catch((err) => {
+      //console.log(err.message);
+      updateLoginCheck(false)
 
 
+
+
+  
+  });
+  
+  },[])
     //HANDLING CHANGES TO THE FORM INPUTS
     function handleChange(e) {
 
@@ -31,9 +50,7 @@ function Login() {
     //LOGIN DATA TO BACKEND
     const handleSubmit = (event) => {
         event.preventDefault();
-        localStorage.removeItem('token'); // for local storage
-// or
-sessionStorage.removeItem('token'); // for session storage
+     
 
 
             // alert('working')

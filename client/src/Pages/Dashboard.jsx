@@ -17,8 +17,8 @@ function Dashboard({ updateLoginCheck }) {
           }
       }).then((res) => res.json())
       .then((data) => {
-        updateLoginCheck(true)
-       
+        data.status=="ok"? updateLoginCheck(true): updateLoginCheck(false)
+     
       })
       .catch((err) => {
           //console.log(err.message);
@@ -237,8 +237,8 @@ function Dashboard({ updateLoginCheck }) {
         <>
             {sessionExpired ? <div className="items-center justify-center align-center text-center   bg-white shadow rounded  p-20 mt-2">
 
-                <h3>Session Expired</h3><br />
-                <a href="/" className="btn btn-sm">Log in</a>
+                <h3>Opps! You need to login first to access this page!</h3><br />
+                <NavLinl href="/" className="btn btn-sm">Take me to log in</NavLinl>
             </div> :
                 <div className=" bg-gradient-to-tl from-green-400 to-indigo-900 w-full py-16 px-4">
                     <Toaster />

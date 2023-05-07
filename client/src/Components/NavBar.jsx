@@ -10,23 +10,20 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function NavBar({adminCheck, updateStatus,loginCheck}) {
+export default function NavBar({adminCheck, updateStatus,loginCheck,logOut}) {
 const [checkAuth,setCheckAuth] =useState()
-
-
-
+console.log(loginCheck)
 
   //NAVIGATION MENU 
   const navigation = loginCheck? [
     { name: 'Home', href: 'Home', current: true,status: "show" },
     { name: 'Champions', href: 'Dashboard', current: false ,status: "show"},
-    { name: 'Log Out', href: "" , current: false,status: adminCheck?"show":"hidden"}
+    { name: 'Log Out', href: "" , current: false,status: logOut}
   ]: [
-    { name: 'Login', href: '/', current: false,status: adminCheck?"hidden":"show" },
+    { name: 'Login', href: '/', current: false,status: "show" },
     { name: 'Signup', href: 'Signup', current: false,status: "show" },
 
   ]
-
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -61,8 +58,9 @@ const [checkAuth,setCheckAuth] =useState()
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                    
+                    item.status?
                      <NavLink 
+                    
                      to={item.href}
                         key={item.name}
                         href={item.href}
@@ -74,6 +72,20 @@ const [checkAuth,setCheckAuth] =useState()
                       >
                         {item.name}
                         </NavLink>
+                        :
+                        <NavLink 
+                       
+                        to={item.href}
+                           key={item.name}
+                           href={item.href}
+                           className={classNames(
+                             item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                             'rounded-md px-3 py-2 text-sm font-medium'
+                           )}
+                           aria-current={item.current ? 'page' : undefined}
+                         >
+                           {item.name}
+                           </NavLink>
                         
                     ))}
                   </div>
@@ -102,8 +114,10 @@ const [checkAuth,setCheckAuth] =useState()
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
               {navigation.map((item) => (
+
                 <Disclosure.Button
                   key={item.name}
+                 
                   as="a"
                   href={item.href}
                   className={classNames(

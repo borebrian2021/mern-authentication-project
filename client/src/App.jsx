@@ -10,6 +10,7 @@ import Dashboard from './Pages/Dashboard'
 import Home from './Pages/home'
 import './App.css'
 import jwt from 'jwt-decode';
+import { useNavigate } from "react-router-dom";
 
 
 function App() {
@@ -17,13 +18,23 @@ function App() {
   const [adminCheck, setAdminCheck] = useState(false)
   const [loginCheck, setLoginCheck] = useState(false)
   const token = localStorage.getItem('token')
-  const user = jwt(token)
+  const navigate =useNavigate();
+
 
   //UPDATE NAVBAR MENU BASED ON CURRENT USER LOGGED IN
 
   const updateLoginCheck=(value)=>{
     setLoginCheck(value)
   }
+
+  const logOut=(value)=>{
+    setLoginCheck(false);
+    localStorage.removeItem('token'); 
+    sessionStorage.removeItem('token'); 
+    navigate('/') 
+    
+  }
+ 
  
   const updateStatus = (value) => {
     setAdminCheck = value;
@@ -31,9 +42,9 @@ function App() {
 
   return (
     <div className="bg-base-200 h-[100%]">
-      <NavBar adminCheck={adminCheck} updateStatus={updateStatus} loginCheck={loginCheck} />
+      <NavBar adminCheck={adminCheck} updateStatus={updateStatus} loginCheck={loginCheck} logOut={logOut} />
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Login updateLoginCheck={updateLoginCheck}/>} />
         <Route path="/Signup" element={<Signup />} />
         <Route path="/ResetPass" element={<ResetPass />} />
         <Route path="/Dashboard" element={<Dashboard updateLoginCheck={updateLoginCheck} /> } />
