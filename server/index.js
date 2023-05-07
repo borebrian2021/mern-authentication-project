@@ -141,7 +141,7 @@ const token =req.headers['x-access-token']
         console.log(token)
 
         const users = await User.find();
-        return res.json({ status: 'ok', admin:decode.role, data: users,username:decode.fullNames, message: "Users retrieved successfully!" })
+        return res.json({ status: 'ok', admin:decode.role, data: users, username:decode.name, message: "Users retrieved successfully!" })
     }
     catch (err) {
 

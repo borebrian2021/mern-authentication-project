@@ -31,7 +31,11 @@ function Login() {
     //LOGIN DATA TO BACKEND
     const handleSubmit = (event) => {
         event.preventDefault();
-   
+        localStorage.removeItem('token'); // for local storage
+// or
+sessionStorage.removeItem('token'); // for session storage
+
+
             // alert('working')
             fetch("http://localhost:1337/api/login", {
                 method: "POST",

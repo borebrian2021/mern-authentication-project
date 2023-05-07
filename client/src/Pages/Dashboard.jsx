@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import toast, { Toaster } from 'react-hot-toast';
 
 function Dashboard() {
-    const [sidebar, setsidebar] = useState();
+    const [userName, setUsername] = useState();
     const [users, setUsers] = useState([]);
     const [id, setId] = useState([]);
     const [updateUser, setUpdateUser] = useState([]);
@@ -168,17 +168,22 @@ function Dashboard() {
                             setIsAdmin(false)
                             console.log(data.data)
                             setUsers(data.data)
+                            toast.success("User")
+
                         }
                         else if(data.status == "ok" && data.admin==2){
                             setIsAdmin(true)
                             console.log(data.data)
                             setUsers(data.data)
+                            toast.success("Admin")
+
                         }
                         else {
                             
                             setSessionExpired(true);
 
                         }
+                        setUsername(data.username)
 
                     })
                     .catch((err) => {
@@ -217,13 +222,13 @@ function Dashboard() {
                      <div className=" bg-gradient-to-tl from-green-400 to-indigo-900 w-full py-16 px-4">
                     <Toaster />
                     <div className="  items-center justify-center bg-white shadow rounded  p-10 mt-2">
-                        <p tabIndex={0} role="heading" aria-label="Login to your account" className="text-2xl font-extrabold leading-6 mb-3 text-gray-800">
-                            Welcome Brian,
-
-                        </p>  <p tabIndex={0} role="heading" className="text-2xl font-extrabold leading-6 mb-3 text-gray-800">
-                            Admin
-
+                    <p tabIndex={0} role="heading" className="text-1xl text-2xl leading-6 mb-3 text-gray-800">
+                            Welcome {userName}
+                        </p> <p tabIndex={0} role="heading" className="text-2xl  leading-6 mb-3 text-gray-800">
+                           
+{isAdmin}
                         </p>
+                        <div className="badge badge-md">{isAdmin?"Administrator":"Guest"}</div>
                         <p tabIndex={0} role="heading" className="text-1xl text-2xl leading-6 mb-3 text-gray-800">
                             Users list
                         </p>
@@ -402,7 +407,7 @@ function Dashboard() {
 
                                 <div className="mt-8">
                                     <button type="submit" role="button" aria-label="create my account" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">
-                                        Create my account
+                                        Update record
                                     </button>
                                 </div>
                             </form>
