@@ -241,27 +241,26 @@ function Dashboard({ updateLoginCheck }) {
                 <h3>Opps! You need to login first to access this page!</h3><br />
                 <NavLink to="/" className="btn btn-sm">Take me to log in</NavLink>
             </div> :
-                <div className=" bg-gradient-to-tl from-green-400 to-indigo-900 w-full py-16 px-4">
+                <div className=" bg-gradient-to-tl from-green-400 to-indigo-900 w-full py-4 px-4">
                     <Toaster />
-                    <div className="  items-center justify-center bg-white shadow rounded  p-10 mt-2">
-                        <p tabIndex={0} role="heading" className="text-1xl text-2xl leading-6 mb-3 text-gray-800">
+                    <div className="  items-center justify-center bg-white shadow rounded  p-4 mt-2">
+                        <p tabIndex={0} role="heading" className="text-1xl text-1xl leading-6 mb-3 text-gray-800">
                             Welcome {userName}
-                        </p> <p tabIndex={0} role="heading" className="text-2xl  leading-6 mb-3 text-gray-800">
-
-                            {isAdmin}
-                        </p>
-                        <div className="badge badge-md">{isAdmin ? "Administrator" : "Guest"}</div>
-                        <p tabIndex={0} role="heading" className="text-1xl text-2xl leading-6 mb-3 text-gray-800">
+                        </p> 
+                        <p tabIndex={0} role="heading" className="text-1xl text-1xl leading-6 mb-3 text-gray-800">
                             Champions  list
                         </p>
-                        <p>Connect with athletic champions through our website. Join now and engage with top athletes, gain inspiration and learn from their experiences.</p>
+                    
+                        <div className="badge badge-md text-xs mb-8">{isAdmin ? "Administrator" : "Guest User"}</div>
+                       
+                        {/* <p className="mb-8 w-[50%]">Connect with athletic champions through our website. Join now and engage with top athletes, gain inspiration and learn from their experiences.</p> */}
                         <div className="overflow-x-auto">
                             <table className="table table-compact w-full">
                                 <thead>
                                     {isAdmin ? <tr >
                                         <th></th>
                                         <th className="text-1xl">Name</th>
-                                        <th>Profile pic</th>
+                                        <t className="text-xs">Profile pic</t>
                                         <th>Gender</th>
                                         <th>Password</th>
                                         <th>Email</th>
@@ -327,7 +326,7 @@ function Dashboard({ updateLoginCheck }) {
 
                                                 <td>
                                                     <div className="avatar">
-                                                        <div className="mask mask-squircle w-12 h-12">
+                                                        <div className="mask mask-squircle h-6">
                                                             <img src={currentValue.profileUrl} alt="Avatar Tailwind CSS Component" />
                                                         </div>
                                                     </div>
@@ -344,7 +343,7 @@ function Dashboard({ updateLoginCheck }) {
 
 
                                                         <button className="btn btn-success  btn-xs" onClick={(event) => {
-                                                            toast('Please keep visiting, this feature is still under mentenance,Thank you.',
+                                                            toast('Please keep visiting our site, this feature is still under development,Thank you.',
                                                                 {
                                                                     icon: '👏',
                                                                     style: {

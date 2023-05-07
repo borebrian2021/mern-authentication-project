@@ -54,6 +54,7 @@ console.log(loginCheck)
                     src="https://res.cloudinary.com/dqab6gg7d/image/upload/v1683268767/mern-authentication/user_318-928479_hnn2v9.avif"
                     alt="Your Company"
                   />
+                  <p className='text-white ml-1'>Champions</p>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
