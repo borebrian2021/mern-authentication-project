@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment,useEffect,useState } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { NavLink } from "react-router-dom";
@@ -10,14 +10,21 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function NavBar({adminCheck, updateStatus}) {
+export default function NavBar({adminCheck, updateStatus,loginCheck}) {
+const [checkAuth,setCheckAuth] =useState()
+
+
+
+
   //NAVIGATION MENU 
-  const navigation = [
+  const navigation = loginCheck? [
     { name: 'Home', href: 'Home', current: true,status: "show" },
+    { name: 'Champions', href: 'Dashboard', current: false ,status: "show"},
+    { name: 'Log Out', href: "" , current: false,status: adminCheck?"show":"hidden"}
+  ]: [
     { name: 'Login', href: '/', current: false,status: adminCheck?"hidden":"show" },
     { name: 'Signup', href: 'Signup', current: false,status: "show" },
-    { name: 'Manage Users', href: 'Dashboard', current: false ,status: "show"},
-    { name: 'Log Out', href: "" , current: false,status: adminCheck?"show":"hidden"}
+
   ]
 
 
@@ -54,9 +61,7 @@ export default function NavBar({adminCheck, updateStatus}) {
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      item.status==="hidden" ?
-                     <></>
-                     :
+                    
                      <NavLink 
                      to={item.href}
                         key={item.name}

@@ -1,13 +1,34 @@
 import React, { useState, useEffect } from "react";
 import toast, { Toaster } from 'react-hot-toast';
 
-function Dashboard() {
+function Dashboard({ updateLoginCheck }) {
     const [userName, setUsername] = useState();
     const [users, setUsers] = useState([]);
     const [id, setId] = useState([]);
     const [updateUser, setUpdateUser] = useState([]);
-    const [isAdmin,setIsAdmin] = useState();
-    const [sessionExpired,setSessionExpired] = useState(false);
+    const [isAdmin, setIsAdmin] = useState();
+    const [sessionExpired, setSessionExpired] = useState(false);
+
+    //CHECK LOGIN STATUS
+    useEffect(() => {
+        fetch("http://localhost:1337/api/check-status", {
+          headers:{
+              'x-access-token': localStorage.getItem('token'),
+          }
+      }).then((res) => res.json())
+      .then((data) => {
+        updateLoginCheck(true)
+       
+      })
+      .catch((err) => {
+          //console.log(err.message);
+          updateLoginCheck(false)
+
+      
+      
+      });
+      
+      },[])
 
 
     //CONTROLLED FORMS
@@ -59,23 +80,131 @@ function Dashboard() {
         if (values.password === values.confirmPassword) {
             // alert('working')
 
-            fetch("http://localhost:1337/api/delete-user/"+id, {
+            fetch("http://localhost:1337/api/delete-user/" + id, {
                 method: "DELETE",
-                headers:{
+                headers: {
                     'x-access-token': localStorage.getItem('token'),
                 },
-               
+
                 body: JSON.stringify({})
             }).then((res) => res.json())
+                .then((data) => {
+                    if (data.status == "ok") {
+                        setUpdateUser({ status: "ok" })
+                        toast.success('Removed user successfully')
+                    }
+                    else {
+                        toast.error('Failed to delete record!')
+                    }
+
+
+                })
+                .catch((err) => {
+                    //console.log(err.message);
+
+                    toast.error('Something went wrong')
+                });
+        }
+
+
+
+    }
+
+    //SUBMIT DATA TO BACKEND
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        if (values.password === values.confirmPassword) {
+            // alert('working')
+
+            fetch("http://localhost:1337/api/update-user/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    fullNames: values.fullNames,
+                    email: values.email,
+                    role: values.role,
+                    phoneNumber: values.phoneNumber,
+                    gender: values.gender,
+                    profileLink: values.profileLink,
+
+                }),
+            }).then((res) => res.json())
+                .then((response) => {
+                    setValues_({
+                        ...values,
+                        fullNames: response.data.fullNames,
+                        email: response.data.email,
+                        role: response.data.role,
+                        phoneNumber: response.data.phoneNumber,
+                        gender: response.data.gender,
+                        profileLink: response.data.profileLink,
+
+                    });
+
+                    // console.log(response);
+                    toast.success('Updated successfully!')
+                    setUpdateUser(response.data)
+                    setTimeout(gotLogin(), 3000);
+
+                })
+            // .error((error) => {
+            //     toast.error('Failed to submit')
+
+            // })
+        }
+        else {
+
+            toast.error('Password field do not match!');
+        }
+
+        //     //LETS UPLOAD PROFILE IMAGE USING AXIOS
+        //      const formData = new FormData ();
+        //     formData.append("file", uploadFile);
+        //     formData.append("upload_preset", "your upload preset name");
+
+        //     Axios.post(
+        //      "https://api.cloudinary.com/v1_1/mern-test/image/upload",
+        //      formData
+        //    )
+        //     .then((response) => {
+        //       console.log(response);
+        //       setCloudinaryImage(response.data.secure_url);
+        //     })
+        //     .catch((error) => {
+        //       console.log(error);
+        //     });
+        //   };
+    }
+
+    useEffect(() => {
+        fetch("http://localhost:1337/api/get-users", {
+            headers: {
+                'x-access-token': localStorage.getItem('token'),
+            }
+        }).then((res) => res.json())
             .then((data) => {
-                if (data.status == "ok") {
-                    setUpdateUser({status: "ok"})
-                toast.success('Removed user successfully')
+                if (data.status == "ok" && data.admin == 1) {
+                    setIsAdmin(false)
+                    console.log(data.data)
+                    setUsers(data.data)
+                    toast.success("User")
+
+                }
+                else if (data.status == "ok" && data.admin == 2) {
+                    setIsAdmin(true)
+                    console.log(data.data)
+                    setUsers(data.data)
+                    toast.success("Admin")
+
                 }
                 else {
-                toast.error('Failed to delete record!')
-                }
 
+                    setSessionExpired(true);
+
+                }
+                setUsername(data.username)
 
             })
             .catch((err) => {
@@ -83,115 +212,7 @@ function Dashboard() {
 
                 toast.error('Something went wrong')
             });
-        }
-    
-
-
-        }
-
-            //SUBMIT DATA TO BACKEND
-            const handleSubmit = (event) => {
-                event.preventDefault();
-                if (values.password === values.confirmPassword) {
-                    // alert('working')
-
-                    fetch("http://localhost:1337/api/update-user/", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            fullNames: values.fullNames,
-                            email: values.email,
-                            role: values.role,
-                            phoneNumber: values.phoneNumber,
-                            gender: values.gender,
-                            profileLink: values.profileLink,
-
-                        }),
-                    }).then((res) => res.json())
-                        .then((response) => {
-                            setValues_({
-                                ...values,
-                                fullNames: response.data.fullNames,
-                                email: response.data.email,
-                                role: response.data.role,
-                                phoneNumber: response.data.phoneNumber,
-                                gender: response.data.gender,
-                                profileLink: response.data.profileLink,
-
-                            });
-
-                            // console.log(response);
-                            toast.success('Updated successfully!')
-                            setUpdateUser(response.data)
-                            setTimeout(gotLogin(), 3000);
-
-                        })
-                    // .error((error) => {
-                    //     toast.error('Failed to submit')
-
-                    // })
-                }
-                else {
-
-                    toast.error('Password field do not match!');
-                }
-
-                //     //LETS UPLOAD PROFILE IMAGE USING AXIOS
-                //      const formData = new FormData ();
-                //     formData.append("file", uploadFile);
-                //     formData.append("upload_preset", "your upload preset name");
-
-                //     Axios.post(
-                //      "https://api.cloudinary.com/v1_1/mern-test/image/upload",
-                //      formData
-                //    )
-                //     .then((response) => {
-                //       console.log(response);
-                //       setCloudinaryImage(response.data.secure_url);
-                //     })
-                //     .catch((error) => {
-                //       console.log(error);
-                //     });
-                //   };
-            }
-
-            useEffect(() => {
-                fetch("http://localhost:1337/api/get-users", {
-                    headers:{
-                        'x-access-token': localStorage.getItem('token'),
-                    }
-                }).then((res) => res.json())
-                    .then((data) => {
-                        if (data.status == "ok" && data.admin==1) {
-                            setIsAdmin(false)
-                            console.log(data.data)
-                            setUsers(data.data)
-                            toast.success("User")
-
-                        }
-                        else if(data.status == "ok" && data.admin==2){
-                            setIsAdmin(true)
-                            console.log(data.data)
-                            setUsers(data.data)
-                            toast.success("Admin")
-
-                        }
-                        else {
-                            
-                            setSessionExpired(true);
-
-                        }
-                        setUsername(data.username)
-
-                    })
-                    .catch((err) => {
-                        //console.log(err.message);
-
-                        toast.error('Something went wrong')
-                    });
-            }, [updateUser])
+    }, [updateUser])
 
 
 
@@ -201,41 +222,42 @@ function Dashboard() {
 
 
 
-            // setLogin({
-            //     ...login,
-            //     email: "",
-            //     password: ""
-            // });
+    // setLogin({
+    //     ...login,
+    //     email: "",
+    //     password: ""
+    // });
 
 
 
 
 
 
-            return (
-                <>
-                {sessionExpired ? <div className="items-center justify-center align-center text-center   bg-white shadow rounded  p-20 mt-2">
+    return (
+        <>
+            {sessionExpired ? <div className="items-center justify-center align-center text-center   bg-white shadow rounded  p-20 mt-2">
 
-<h3>Session Expired</h3><br/>
-<a href="/" className="btn btn-sm">Log in</a>
-                    </div>:
-                     <div className=" bg-gradient-to-tl from-green-400 to-indigo-900 w-full py-16 px-4">
+                <h3>Session Expired</h3><br />
+                <a href="/" className="btn btn-sm">Log in</a>
+            </div> :
+                <div className=" bg-gradient-to-tl from-green-400 to-indigo-900 w-full py-16 px-4">
                     <Toaster />
                     <div className="  items-center justify-center bg-white shadow rounded  p-10 mt-2">
-                    <p tabIndex={0} role="heading" className="text-1xl text-2xl leading-6 mb-3 text-gray-800">
+                        <p tabIndex={0} role="heading" className="text-1xl text-2xl leading-6 mb-3 text-gray-800">
                             Welcome {userName}
                         </p> <p tabIndex={0} role="heading" className="text-2xl  leading-6 mb-3 text-gray-800">
-                           
-{isAdmin}
+
+                            {isAdmin}
                         </p>
-                        <div className="badge badge-md">{isAdmin?"Administrator":"Guest"}</div>
+                        <div className="badge badge-md">{isAdmin ? "Administrator" : "Guest"}</div>
                         <p tabIndex={0} role="heading" className="text-1xl text-2xl leading-6 mb-3 text-gray-800">
-                            Users list
+                            Champions  list
                         </p>
+                        <p>Connect with athletic champions through our website. Join now and engage with top athletes, gain inspiration and learn from their experiences.</p>
                         <div className="overflow-x-auto">
                             <table className="table table-compact w-full">
                                 <thead>
-                                    {isAdmin?  <tr >
+                                    {isAdmin ? <tr >
                                         <th></th>
                                         <th className="text-1xl">Name</th>
                                         <th>Profile pic</th>
@@ -244,7 +266,7 @@ function Dashboard() {
                                         <th>Email</th>
                                         <th>Role</th>
                                         <th>Action</th>
-                                    </tr>: <tr >
+                                    </tr> : <tr >
                                         <th></th>
                                         <th className="text-1xl">Name</th>
                                         <th>Profile pic</th>
@@ -252,11 +274,11 @@ function Dashboard() {
                                         <th>Email</th>
                                         <th>Action</th>
 
-                                       
+
                                     </tr>}
-                                   
+
                                 </thead>
-                                <tbody>{isAdmin?<>
+                                <tbody>{isAdmin ? <>
                                     {users.map((currentValue, index, array) => (
                                         <tr>
                                             <th>{index + 1}</th>
@@ -287,20 +309,21 @@ function Dashboard() {
                                                         setId(currentValue._id);
                                                     }
                                                     }>Edit</label>
-                                                    <button className="btn btn-error  btn-xs" onClick={(event)=>{handleDelete(event)
-                                                     setId(currentValue._id);
+                                                    <button className="btn btn-error  btn-xs" onClick={(event) => {
+                                                        handleDelete(event)
+                                                        setId(currentValue._id);
                                                     }}>Delete</button>
                                                 </div>
                                             </td>
-                                        </tr>))}</>:
-                                        <>
+                                        </tr>))}</> :
+                                    <>
                                         {users.map((currentValue, index, array) => (
                                             <tr>
                                                 <th>{index + 1}</th>
-    
+
                                                 <td><p>{currentValue.fullNames}</p>
                                                 </td>
-    
+
                                                 <td>
                                                     <div className="avatar">
                                                         <div className="mask mask-squircle w-12 h-12">
@@ -311,34 +334,34 @@ function Dashboard() {
                                                 <td>
                                                     <p>{currentValue.gender}</p>
                                                 </td>
-                                               
+
                                                 <td> <p>{currentValue.email}</p>
-                                                
+
                                                 </td>
                                                 <td>
-                                                <div className="btn-group">
+                                                    <div className="btn-group">
 
-                                                  
-                                                    <button className="btn btn-error  btn-xs" onClick={(event)=>{
-                                                    toast('Please keep visiting, this feature is still under mentenance,Thank you.',
-                                                    {
-                                                      icon: '👏',
-                                                      style: {
-                                                        borderRadius: '10px',
-                                                        background: '#333',
-                                                        color: '#fff',
-                                                      },
-                                                    }
-                                                  );
-                                                    }}>Delete</button>
-                                                </div>
-                                            </td>
-                                               
-                                               
+
+                                                        <button className="btn btn-success  btn-xs" onClick={(event) => {
+                                                            toast('Please keep visiting, this feature is still under mentenance,Thank you.',
+                                                                {
+                                                                    icon: '👏',
+                                                                    style: {
+                                                                        borderRadius: '10px',
+                                                                        background: '#333',
+                                                                        color: '#fff',
+                                                                    },
+                                                                }
+                                                            );
+                                                        }}>Connect</button>
+                                                    </div>
+                                                </td>
+
+
                                             </tr>))}</>}
                                 </tbody>
                                 <tfoot>
-                                {isAdmin?  <tr >
+                                    {isAdmin ? <tr >
                                         <th></th>
                                         <th className="text-1xl">Name</th>
                                         <th>Profile pic</th>
@@ -347,7 +370,7 @@ function Dashboard() {
                                         <th>Email</th>
                                         <th>Role</th>
                                         <th>Action</th>
-                                    </tr>: <tr >
+                                    </tr> : <tr >
                                         <th></th>
                                         <th className="text-1xl">Name</th>
                                         <th>Profile pic</th>
@@ -355,7 +378,7 @@ function Dashboard() {
                                         <th>Email</th>
                                         <th>Action</th>
 
-                                       
+
                                     </tr>}
                                 </tfoot>
                             </table>
@@ -417,11 +440,11 @@ function Dashboard() {
                         </div>
                     </div>
                 </div>
-                }
-              
-                </>
-               
-            );
-        }
+            }
 
-        export default Dashboard;
+        </>
+
+    );
+}
+
+export default Dashboard;

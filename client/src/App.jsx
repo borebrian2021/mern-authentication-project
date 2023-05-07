@@ -20,9 +20,11 @@ function App() {
   const user = jwt(token)
 
   //UPDATE NAVBAR MENU BASED ON CURRENT USER LOGGED IN
+
+  const updateLoginCheck=(value)=>{
+    setLoginCheck(value)
+  }
  
-
-
   const updateStatus = (value) => {
     setAdminCheck = value;
   }
@@ -34,8 +36,8 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/Signup" element={<Signup />} />
         <Route path="/ResetPass" element={<ResetPass />} />
-        <Route path="/Dashboard" element={<Dashboard /> } />
-        <Route path="/Home" element={token? <Home />:<Login/>}/>
+        <Route path="/Dashboard" element={<Dashboard updateLoginCheck={updateLoginCheck} /> } />
+        <Route path="/Home" element={token? <Home updateLoginCheck={updateLoginCheck} />:<Login/>}/>
         {/* <Login/> */}
         {/* <Signup/> */}
         {/* <ResetPass/> */}

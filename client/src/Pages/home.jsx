@@ -3,7 +3,7 @@ import jwt from 'jwt-decode';
 
 
 import toast, { Toaster } from 'react-hot-toast';
-function Home() {
+function Home({updateLoginCheck}) {
 // const history = useHistory();
 const [userName,setUserName]=useState("");
 const [role,setRole]=useState("");
@@ -13,6 +13,36 @@ const [role,setRole]=useState("");
         const token = localStorage.getItem('token')
         // const history = useHistory()
         console.log(token)
+
+
+
+ //CHECK LOGIN STATUS
+ useEffect(() => {
+    fetch("http://localhost:1337/api/check-status", {
+      headers:{
+          'x-access-token': localStorage.getItem('token'),
+      }
+  }).then((res) => res.json())
+  .then((data) => {
+    updateLoginCheck(true)
+   
+  })
+  .catch((err) => {
+      //console.log(err.message);
+      updateLoginCheck(false)
+
+  
+  
+  });
+  
+  },[])
+
+
+
+
+
+
+
 
         // if (token) {
         //     const user = jwt(token)

@@ -149,6 +149,28 @@ const token =req.headers['x-access-token']
 
     }
 
+}
+)
+//CHECK AUTH STATUS
+app.get('/api/check-status', async (req, res) => {
+
+const token =req.headers['x-access-token']
+
+
+
+    try {
+        const decode =jwt.verify(token,'mern-assesement2023')
+        console.log(token)
+
+        const users = await User.find();
+        return res.json({ status: 'ok',message: "Authenticated",isAdmin:users.role })
+    }
+    catch (err) {
+
+        return res.json({ error:err, status: 'error', message: "Unauthenticated" })
+
+    }
+
 })
 
 
